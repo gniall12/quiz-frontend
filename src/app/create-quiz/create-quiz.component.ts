@@ -11,12 +11,14 @@ import { Router } from "@angular/router";
 export class CreateQuizComponent implements OnInit {
   quizName: string;
   rounds;
+  disableSubmit: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
   ngOnInit() {
     this.getQuizName();
     this.rounds = [new FormArray([])];
+    this.disableSubmit = false;
   }
 
   public getQuizName() {
@@ -34,6 +36,7 @@ export class CreateQuizComponent implements OnInit {
   }
 
   onSubmit() {
+    this.disableSubmit = true;
     const numRounds = this.rounds.length;
     const questions = this.rounds.map((formdata, index: Number) => {
       return {
