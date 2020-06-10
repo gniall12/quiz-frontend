@@ -1,0 +1,13 @@
+<h5 *ngIf="quiz">{{ quiz["name"] }}</h5>
+
+<h6 *ngIf="numRounds">{{ numRounds }} Rounds</h6>
+<p *ngIf="numQuestions">{{ numQuestions }} Questions</p>
+<br />
+<p *ngIf="quiz">Quiz Code: {{ quiz["id"] }}</p>
+<p *ngIf="quiz">Link: {{ baseUrl }}?quiz-id={{ quiz["id"] }}</p>
+<button *ngIf="quiz" class="btn" [cdkCopyToClipboard]="getQuizLink()">
+  Copy Link
+</button>
+
+<br />
+<button [disabled]="disableSubmit" class="btn" (click)="onStartQuiz()">Start Quiz</button>

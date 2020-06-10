@@ -1,0 +1,19 @@
+<h3>Leaderboard</h3>
+
+<table class="table" *ngIf="participants">
+  <tr *ngFor="let participant of participants">
+    <td>{{ participant["name"] }}</td>
+    <td>{{ participant["score"] }}</td>
+  </tr>
+</table>
+
+<button
+  [disabled]="disableSubmit"
+  *ngIf="!finalRound"
+  class="btn"
+  (click)="onProceed()"
+>
+  Proceed
+</button>
+
+<h4 *ngIf="finalRound">End of Quiz!</h4>

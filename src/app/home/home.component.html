@@ -1,0 +1,44 @@
+<button class="btn" (click)="onCreateQuiz()">Create a Quiz</button>
+
+<form
+  *ngIf="createQuiz"
+  class="form-inline"
+  [formGroup]="createFormdata"
+  (ngSubmit)="onCreateQuizSubmit()"
+>
+  <div class="form-group">
+    <input
+      class="form-control"
+      name="quizName"
+      formControlName="quizName"
+      placeholder="Enter quiz name"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br />
+
+<button class="btn" (click)="onJoinQuiz()">Join a Quiz</button>
+<form
+  *ngIf="joinQuiz"
+  class="form-inline"
+  [formGroup]="joinFormdata"
+  (ngSubmit)="onJoinQuizSubmit()"
+>
+  <div class="form-group">
+    <input
+      class="form-control"
+      name="participantName"
+      formControlName="participantName"
+      placeholder="Enter your name"
+    />
+    <input
+      class="form-control"
+      name="quizCode"
+      formControlName="quizCode"
+      placeholder="Enter quiz code"
+    />
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

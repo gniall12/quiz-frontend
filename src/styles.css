@@ -1,0 +1,9 @@
+button.btn {
+  background: blue;
+  color: white;
+  margin: 5px 0px;
+}
+
+.wrapper {
+  margin: 20px 40px;
+}

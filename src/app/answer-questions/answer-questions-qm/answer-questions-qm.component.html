@@ -1,0 +1,9 @@
+<h5 *ngIf="quiz">Round {{ quiz['current_round'] }}</h5>
+
+<p *ngFor="let question of questions">{{ question['question'] }}</p>
+
+<br>
+
+<p>Waiting for participants to answer</p>
+
+<button [disabled]="disableSubmit" class="btn" (click)="onEndRound()">End Round</button>

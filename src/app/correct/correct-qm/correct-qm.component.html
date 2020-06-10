@@ -1,0 +1,38 @@
+<h6 *ngIf="quiz">Round {{ quiz["current_round"] }}</h6>
+<div *ngFor="let participant of participants; let i = index">
+  <h5>{{ participant["name"] }}</h5>
+  <button class="btn" (click)="onGetAnswers(participant, i)">
+    Get Answers
+  </button>
+  <div *ngIf="participant['answers']">
+    <div *ngFor="let answer of participant['answers']">
+      <p>{{ answer["question"] }}</p>
+      <div class="row">
+        <div class="col-md-6">
+          <p>{{ answer["answer"] }}</p>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="btn"
+            [style.border]="
+              answer['correct'] === 1 ? '3px solid green' : 'none'
+            "
+            (click)="onCorrect(answer)"
+          >
+            Correct
+          </button>
+        </div>
+        <div class="col-md-3">
+          <button
+            class="btn"
+            [style.border]="answer['correct'] === -1 ? '3px solid red' : 'none'"
+            (click)="onIncorrect(answer)"
+          >
+            Incorrect
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<button [disabled]="disableSubmit" class="btn" (click)="onProceed()">Proceed</button>

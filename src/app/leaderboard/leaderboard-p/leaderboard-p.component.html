@@ -1,0 +1,10 @@
+<h3>Leaderboard</h3>
+
+<table class="table" *ngIf="participants">
+  <tr *ngFor="let participant of participants">
+    <td>{{ participant["name"] }}</td>
+    <td>{{ participant["score"] }}</td>
+  </tr>
+</table>
+
+<h4 *ngIf="finalRound">End of Quiz!</h4>

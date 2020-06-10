@@ -1,0 +1,18 @@
+<h5 *ngIf="quiz">Round {{ quiz["current_round"] }}</h5>
+
+<form
+  *ngIf="answersFormData && answersFormData.controls"
+  [formGroup]="answersFormData"
+  (ngSubmit)="onSubmitAnswers()"
+>
+  <div class="form-group">
+    <div *ngFor="let question of questions">
+      <p>{{ question["question"] }}</p>
+      <input
+        class="form-control"
+        [formControlName]="question['question']"
+        placeholder="Enter answer here"
+      />
+    </div>
+  </div>
+</form>

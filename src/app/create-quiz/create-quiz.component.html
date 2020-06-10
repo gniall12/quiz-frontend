@@ -1,0 +1,13 @@
+<h3 *ngIf="quizName">{{ quizName }}</h3>
+
+<div *ngFor="let round of rounds; index as j">
+  <h5>Round {{ j }}</h5>
+  <div *ngFor="let control of round.controls; index as i">
+    <p>Question {{ i }}</p>
+    <input [formControl]="round.controls[i]" />
+  </div>
+  <button class="btn" (click)="onAddQuestion(round)">Add Question</button>
+  <button class="btn" (click)="onAddRound()">Add Round</button>
+</div>
+
+<button class="btn" (click)="onSubmit()">Submit</button>
