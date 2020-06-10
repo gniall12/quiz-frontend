@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   createFormdata: FormGroup;
   joinFormdata: FormGroup;
   quizId: number;
+  disableSubmit: boolean;
 
   constructor(
     private backendService: BackendService,
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
         this.joinFormdata.controls["quizCode"].setValue(params["quiz-id"]);
       }
     });
+    this.disableSubmit = false;
   }
 
   public onCreateQuiz() {
@@ -50,6 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onCreateQuizSubmit() {
+    this.disableSubmit = true;
     const quizName: string = this.createFormdata.controls["quizName"].value;
     this.backendService.createQuiz(quizName).subscribe((resp) => {
       console.log(resp);
@@ -59,6 +62,7 @@ export class HomeComponent implements OnInit {
   }
 
   public onJoinQuizSubmit() {
+    this.disableSubmit = true;
     const participantName: string = this.joinFormdata.controls[
       "participantName"
     ].value;

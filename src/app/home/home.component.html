@@ -14,7 +14,9 @@
       placeholder="Enter quiz name"
     />
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button [disabled]="disableSubmit" type="submit" class="btn btn-primary">
+    Submit
+  </button>
 </form>
 
 <br />
@@ -40,5 +42,7 @@
       placeholder="Enter quiz code"
     />
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button [disabled]="disableSubmit" type="submit" class="btn btn-primary">
+    Submit
+  </button>
 </form>
