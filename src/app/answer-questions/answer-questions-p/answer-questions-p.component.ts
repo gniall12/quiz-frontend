@@ -2,7 +2,7 @@ import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
 import { BackendService } from "../../backend.service";
 import { FormGroup, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
+import { Subscription, Observable } from "rxjs";
 import { AnswerQuestionsComponent } from "../answer-questions/answer-questions.component";
 
 @Component({
@@ -14,6 +14,8 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
   implements OnInit {
   answersFormData: FormGroup;
   subscription: Subscription;
+  submitted: boolean;
+  disableSubmit: boolean;
 
   constructor(
     protected backendService: BackendService,
@@ -34,19 +36,30 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     this.answersFormData = new FormGroup({});
     this.backendService.connectToChangeNotifications();
     this.subscription = this.backendService.changeViewEvent$.subscribe(() => {
-      console.log("X");
-      this.onSubmitAnswers();
+      if (this.submitted) {
+        this.router.navigate(["/correct-p"]);
+      } else {
+        this.submitAnswers().subscribe((resp) => {
+          this.submitted = true;
+          this.router.navigate(["/correct-p"]);
+        });
+      }
+    });
+    this.submitted = false;
+  }
+
+  onClickSubmit() {
+    this.submitAnswers().subscribe((resp) => {
+      this.submitted = true;
     });
   }
 
-  onSubmitAnswers() {
-    console.log(this.questions);
+  submitAnswers(): Observable<Object> {
     this.questions.forEach((question) => {
       question["answer"] = this.answersFormData.value[question["question"]];
     });
-    this.backendService.submitAnswers(this.questions).subscribe((resp) => {
-      this.router.navigate(["/correct-p"]);
-    });
+    this.disableSubmit = true;
+    return this.backendService.submitAnswers(this.questions);
   }
 
   ngOnDestroy() {
