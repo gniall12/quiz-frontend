@@ -3,7 +3,7 @@
 <form
   *ngIf="answersFormData && answersFormData.controls"
   [formGroup]="answersFormData"
-  (ngSubmit)="onSubmitAnswers()"
+  (ngSubmit)="onClickSubmit()"
 >
   <div class="form-group">
     <div *ngFor="let question of questions">
@@ -15,4 +15,5 @@
       />
     </div>
   </div>
+  <button [disabled]="disableSubmit || submitted" class="btn">Submit</button>
 </form>
