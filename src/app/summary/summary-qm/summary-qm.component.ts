@@ -28,11 +28,16 @@ export class SummaryQmComponent extends SummaryComponent
   ngOnInit() {
     super.ngOnInit();
     this.participantSubscription = interval(5000)
-    .pipe(switchMap(() => this.backendService.getParticipants()))
-    .pipe(
-        catchError(() => {
-          return empty();
-        })
+      .pipe(
+        startWith(0),
+        mergeMap((obs) =>
+          this.backendService.getParticipants().pipe(
+            catchError((error) => {
+              this.participants = [];
+              return empty();
+            })
+          )
+        )
       )
       .subscribe((res) => {
         this.participants = res["participants"];
@@ -54,6 +59,7 @@ export class SummaryQmComponent extends SummaryComponent
 
   onRemoveParticipant(participant) {
     this.backendService.deleteParticipant(participant).subscribe((res) => {
+      console.log(res);
     });
   }
 
