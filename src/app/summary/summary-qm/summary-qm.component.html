@@ -9,5 +9,11 @@
   Copy Link
 </button>
 
-<br />
-<button [disabled]="disableSubmit" class="btn" (click)="onStartQuiz()">Start Quiz</button>
+<h5>Participants</h5>
+<div *ngIf="participants">
+  <p *ngFor="let participant of participants">{{ participant["name"] }}</p>
+</div>
+
+<button [disabled]="disableSubmit" class="btn" (click)="onStartQuiz()">
+  Start Quiz
+</button>
