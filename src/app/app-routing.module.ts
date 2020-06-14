@@ -14,14 +14,14 @@ import { CorrectPComponent } from "./correct/correct-p/correct-p.component";
 const routes: Routes = [
   { path: "", component: HomeComponent },
   { path: "create-quiz", component: CreateQuizComponent },
-  { path: "summary-qm", component: SummaryQmComponent },
-  { path: "summary-p", component: SummaryPComponent },
-  { path: "answer-questions-qm", component: AnswerQuestionsQmComponent },
-  { path: "answer-questions-p", component: AnswerQuestionsPComponent },
-  { path: "correct-qm", component: CorrectQmComponent },
-  { path: "correct-p", component: CorrectPComponent },
-  { path: "leaderboard-qm", component: LeaderboardQmComponent },
-  { path: "leaderboard-p", component: LeaderboardPComponent },
+  { path: "quizmaster/summary", component: SummaryQmComponent },
+  { path: "participant/summary", component: SummaryPComponent },
+  { path: "quizmaster/answer-questions", component: AnswerQuestionsQmComponent },
+  { path: "participant/answer-questions", component: AnswerQuestionsPComponent },
+  { path: "quizmaster/correct", component: CorrectQmComponent },
+  { path: "participant/correct", component: CorrectPComponent },
+  { path: "quizmaster/leaderboard", component: LeaderboardQmComponent },
+  { path: "participant/leaderboard", component: LeaderboardPComponent },
 ];
 
 @NgModule({

@@ -27,7 +27,7 @@ export class AnswerQuestionsQmComponent extends AnswerQuestionsComponent
   onEndRound() {
     this.disableSubmit = true;
     this.backendService.changePage().subscribe((resp) => {
-      this.router.navigate(["correct-qm"]);
+      this.router.navigate(["quizmaster/correct"]);
     });
   }
 }

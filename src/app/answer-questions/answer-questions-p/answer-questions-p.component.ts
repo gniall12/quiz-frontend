@@ -37,11 +37,11 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     this.backendService.connectToChangeNotifications();
     this.subscription = this.backendService.changeViewEvent$.subscribe(() => {
       if (this.submitted) {
-        this.router.navigate(["/correct-p"]);
+        this.router.navigate(["participant/correct"]);
       } else {
         this.submitAnswers().subscribe((resp) => {
           this.submitted = true;
-          this.router.navigate(["/correct-p"]);
+          this.router.navigate(["participant/correct"]);
         });
       }
     });
