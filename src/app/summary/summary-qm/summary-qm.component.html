@@ -11,7 +11,10 @@
 
 <h5>Participants</h5>
 <div *ngIf="participants">
-  <p *ngFor="let participant of participants">{{ participant["name"] }}</p>
+  <div *ngFor="let participant of participants">
+    <span>{{ participant["name"] }}</span>
+    <button (click)="onRemoveParticipant(participant)">Remove</button>
+  </div>
 </div>
 
 <button [disabled]="disableSubmit" class="btn" (click)="onStartQuiz()">

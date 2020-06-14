@@ -117,9 +117,15 @@ export class BackendService {
   addParticipant(participantName: string): Observable<object> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
+      quiz_id: quizId,
       name: participantName,
     };
-    return this.http.post(`${this.backendUrl}/participant/${quizId}`, body);
+    return this.http.post(`${this.backendUrl}/participant`, body);
+  }
+
+  deleteParticipant(participant: object) {
+    const id = participant["id"];
+    return this.http.delete(`${this.backendUrl}/participant/${id}`);
   }
 
   getParticipants(): Observable<object> {

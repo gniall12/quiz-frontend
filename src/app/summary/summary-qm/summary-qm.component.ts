@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { SummaryComponent } from "../summary/summary.component";
 import { environment } from "src/environments/environment";
 import { interval, Subscription, empty } from "rxjs";
-import { switchMap, catchError } from "rxjs/operators";
+import { switchMap, catchError, startWith, mergeMap } from "rxjs/operators";
 
 @Component({
   selector: "app-summary-qm",
@@ -28,11 +28,16 @@ export class SummaryQmComponent extends SummaryComponent
   ngOnInit() {
     super.ngOnInit();
     this.participantSubscription = interval(5000)
-      .pipe(switchMap(() => this.backendService.getParticipants()))
       .pipe(
-        catchError(() => {
-          return empty();
-        })
+        startWith(0),
+        mergeMap((obs) =>
+          this.backendService.getParticipants().pipe(
+            catchError((error) => {
+              this.participants = [];
+              return empty();
+            })
+          )
+        )
       )
       .subscribe((res) => {
         this.participants = res["participants"];
@@ -50,6 +55,12 @@ export class SummaryQmComponent extends SummaryComponent
 
   getQuizLink() {
     return `${this.baseUrl}?quiz-id=${this.quiz["id"]}`;
+  }
+
+  onRemoveParticipant(participant) {
+    this.backendService.deleteParticipant(participant).subscribe((res) => {
+      console.log(res);
+    });
   }
 
   ngOnDestroy() {
