@@ -38,7 +38,7 @@ export class CreateQuizComponent implements OnInit {
   onSubmit() {
     this.disableSubmit = true;
     const numRounds = this.rounds.length;
-    const questions = this.rounds.map((formdata, index: Number) => {
+    const questions = this.rounds.map((formdata, index: number) => {
       return {
         round_number: index,
         questions: formdata.value,

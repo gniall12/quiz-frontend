@@ -9,8 +9,8 @@ import { map } from "rxjs/operators";
   styleUrls: ["./answer-questions.component.css"],
 })
 export class AnswerQuestionsComponent implements OnInit {
-  questions: Array<Object>;
-  quiz: Object;
+  questions: Array<object>;
+  quiz: object;
 
   constructor(
     protected backendService: BackendService,

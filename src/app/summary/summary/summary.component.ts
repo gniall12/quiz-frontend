@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./summary.component.css"],
 })
 export class SummaryComponent implements OnInit {
-  quiz: Object;
+  quiz: object;
   numRounds: number;
   numQuestions: number;
 
@@ -29,7 +29,7 @@ export class SummaryComponent implements OnInit {
       const questions = resp["questions"];
       this.numQuestions = questions.length;
       const roundSet = new Set([]);
-      questions.forEach((question: Object) => {
+      questions.forEach((question: object) => {
         roundSet.add(question["round"]);
       });
       this.numRounds = roundSet.size;

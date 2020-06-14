@@ -8,9 +8,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./correct-qm.component.css"],
 })
 export class CorrectQmComponent implements OnInit {
-  quiz: Object;
-  participants: Array<Object>;
-  participantAnswers: Array<Object>;
+  quiz: object;
+  participants: Array<object>;
+  participantAnswers: Array<object>;
   disableSubmit: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
@@ -35,17 +35,17 @@ export class CorrectQmComponent implements OnInit {
       });
   }
 
-  onCorrect(answer: Object) {
+  onCorrect(answer: object) {
     answer["correct"] = 1;
   }
 
-  onIncorrect(answer: Object) {
+  onIncorrect(answer: object) {
     answer["correct"] = -1;
   }
 
   onProceed() {
     this.disableSubmit = true;
-    this.participants.forEach(function (participant: Array<Object>) {
+    this.participants.forEach(function (participant: Array<object>) {
       let numCorrect = 0;
       participant["answers"].forEach(function (answer) {
         if (answer["correct"] === 1) numCorrect += 1;
