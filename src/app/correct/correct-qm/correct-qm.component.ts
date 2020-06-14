@@ -56,7 +56,7 @@ export class CorrectQmComponent implements OnInit {
     this.backendService
       .setParticipantScores(this.participants)
       .subscribe((resp) => {
-        this.router.navigate(["leaderboard-qm"]);
+        this.router.navigate(["quizmaster/leaderboard"]);
       });
   }
 }

@@ -45,7 +45,7 @@ export class CreateQuizComponent implements OnInit {
       };
     });
     this.backendService.addRounds(questions, numRounds).subscribe((resp) => {
-      this.router.navigate(["summary-qm"]);
+      this.router.navigate(["quizmaster/summary"]);
     });
   }
 }

@@ -29,7 +29,7 @@ export class LeaderboardQmComponent extends LeaderboardComponent
     this.backendService
       .changeRoundAndProceed(this.quiz["current_round"] + 1)
       .subscribe(() => {
-        this.router.navigate(["/answer-questions-qm"]);
+        this.router.navigate(["quizmaster/answer-questions"]);
       });
   }
 }

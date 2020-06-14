@@ -23,7 +23,7 @@ export class SummaryPComponent extends SummaryComponent implements OnInit {
     super.ngOnInit();
     this.backendService.connectToChangeNotifications();
     this.subscription = this.backendService.changeViewEvent$.subscribe(() => {
-      this.router.navigate(["/answer-questions-p"]);
+      this.router.navigate(["participant/answer-questions"]);
     });
   }
 

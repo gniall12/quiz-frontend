@@ -24,7 +24,7 @@ export class LeaderboardPComponent extends LeaderboardComponent
     super.ngOnInit();
     this.backendService.connectToChangeNotifications();
     this.subscription = this.backendService.changeViewEvent$.subscribe(() => {
-      this.router.navigate(["/answer-questions-p"]);
+      this.router.navigate(["participant/answer-questions"]);
     });
   }
 

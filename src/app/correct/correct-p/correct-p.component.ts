@@ -17,7 +17,7 @@ export class CorrectPComponent implements OnInit {
     this.backendService.connectToChangeNotifications();
     this.subscription = this.backendService.changeViewEvent$.subscribe(
       (resp) => {
-        this.router.navigate(["leaderboard-p"]);
+        this.router.navigate(["participant/leaderboard"]);
       }
     );
   }

@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
     this.backendService.addParticipant(participantName).subscribe(
       (resp) => {
         this.dataService.setParticipantId(resp["id"]);
-        this.router.navigate(["summary-p"]);
+        this.router.navigate(["participant/summary"]);
       },
       (error) => {
         this.disableSubmit = false;
