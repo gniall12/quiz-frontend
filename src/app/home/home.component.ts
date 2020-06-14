@@ -10,8 +10,8 @@ import { DataService } from "../data.service";
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent implements OnInit {
-  createQuiz: Boolean = false;
-  joinQuiz: Boolean = false;
+  createQuiz: boolean = false;
+  joinQuiz: boolean = false;
   createFormdata: FormGroup;
   joinFormdata: FormGroup;
   quizId: number;

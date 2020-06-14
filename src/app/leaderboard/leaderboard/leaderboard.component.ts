@@ -8,9 +8,9 @@ import { Router } from "@angular/router";
   styleUrls: ["./leaderboard.component.css"],
 })
 export class LeaderboardComponent implements OnInit {
-  participants: Array<Object>;
-  quiz: Object;
-  finalRound: Boolean;
+  participants: Array<object>;
+  quiz: object;
+  finalRound: boolean;
 
   constructor(
     protected backendService: BackendService,

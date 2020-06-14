@@ -54,7 +54,7 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     });
   }
 
-  submitAnswers(): Observable<Object> {
+  submitAnswers(): Observable<object> {
     this.questions.forEach((question) => {
       question["answer"] = this.answersFormData.value[question["question"]];
     });
