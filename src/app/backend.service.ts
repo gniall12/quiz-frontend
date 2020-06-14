@@ -122,6 +122,11 @@ export class BackendService {
     return this.http.post(`${this.backendUrl}/participant/${quizId}`, body);
   }
 
+  deleteParticipant(participant: object) {
+    const id = participant["id"];
+    return this.http.delete(`${this.backendUrl}/participant/${id}`);
+  }
+
   getParticipants(): Observable<object> {
     const quizId: string = this.dataService.getQuizId();
     return this.http.get(`${this.backendUrl}/participants/${quizId}`);
