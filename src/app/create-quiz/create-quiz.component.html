@@ -1,7 +1,7 @@
 <h3 *ngIf="quizName">{{ quizName }}</h3>
 
 <div *ngFor="let round of rounds; index as j">
-  <h5>Round {{ j }}</h5>
+  <h5>Round {{ j + 1 }}</h5>
   <div *ngFor="let control of round.controls; index as i">
     <p class="question-title">Question {{ i }}</p>
     <input [formControl]="round.controls[i]" />
