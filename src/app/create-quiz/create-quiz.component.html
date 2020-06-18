@@ -3,7 +3,7 @@
 <div *ngFor="let round of rounds; index as j">
   <h5>Round {{ j }}</h5>
   <div *ngFor="let control of round.controls; index as i">
-    <p>Question {{ i }}</p>
+    <p class="question-title">Question {{ i }}</p>
     <input [formControl]="round.controls[i]" />
   </div>
   <button class="btn add-btn" (click)="onAddQuestion(round)">
