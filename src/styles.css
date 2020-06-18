@@ -56,3 +56,14 @@ body {
   color: var(--submit-btn-text-color);
   line-height: 1.5;
 }
+
+input {
+  width: 100%;
+}
+
+input,
+.form-control,
+.plain-text {
+  font-size: 0.9rem;
+  font-family: "Montserrat", sans-serif;
+}
