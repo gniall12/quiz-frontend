@@ -1,0 +1,13 @@
+.add-btn {
+  padding: 0px;
+  display: block;
+}
+
+.add-img {
+  margin: 10px 10px 10px 0px;
+  max-height: 30px;
+}
+
+.add-text {
+  display: inline;
+}

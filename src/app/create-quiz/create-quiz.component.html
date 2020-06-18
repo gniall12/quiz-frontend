@@ -6,8 +6,20 @@
     <p>Question {{ i }}</p>
     <input [formControl]="round.controls[i]" />
   </div>
-  <button class="btn" (click)="onAddQuestion(round)">Add Question</button>
-  <button class="btn" (click)="onAddRound()">Add Round</button>
+  <button class="btn add-btn" (click)="onAddQuestion(round)">
+    <img src="assets/add_question.svg" alt="Add Question" class="add-img" />
+    <p class="plain-text" class="add-text">Add Question</p>
+  </button>
+  <button class="btn add-btn" (click)="onAddRound()">
+    <img src="assets/add_round.svg" alt="Add Round" class="add-img" />
+    <p class="plain-text" class="add-text">Add Round</p>
+  </button>
 </div>
 
-<button [disabled]="disableSubmit" class="btn custom-btn submit-btn" (click)="onSubmit()">Submit</button>
+<button
+  [disabled]="disableSubmit"
+  class="btn custom-btn submit-btn"
+  (click)="onSubmit()"
+>
+  Submit
+</button>
