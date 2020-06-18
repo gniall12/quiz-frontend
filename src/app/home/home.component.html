@@ -1,48 +1,67 @@
-<button class="btn" (click)="onCreateQuiz()">Create a Quiz</button>
+<button class="btn custom-btn main-btn" (click)="onCreateQuiz()">
+  Create a Quiz
+</button>
 
 <form
   *ngIf="createQuiz"
-  class="form-inline"
   [formGroup]="createFormdata"
   (ngSubmit)="onCreateQuizSubmit()"
 >
-  <div class="form-group">
-    <input
-      class="form-control"
-      name="quizName"
-      formControlName="quizName"
-      placeholder="Enter quiz name"
-    />
+  <div class="form-group" style="margin-bottom: 0px;">
+    <label>
+      Quiz Name
+      <input
+        class="form-control"
+        name="quizName"
+        formControlName="quizName"
+        placeholder="Enter quiz name"
+      />
+    </label>
   </div>
-  <button [disabled]="disableSubmit" type="submit" class="btn btn-primary">
+  <button
+    [disabled]="disableSubmit"
+    type="submit"
+    class="btn custom-btn submit-btn"
+  >
     Submit
   </button>
 </form>
 
 <br />
 
-<button class="btn" (click)="onJoinQuiz()">Join a Quiz</button>
+<button class="btn custom-btn main-btn" (click)="onJoinQuiz()">
+  Join a Quiz
+</button>
 <form
   *ngIf="joinQuiz"
-  class="form-inline"
   [formGroup]="joinFormdata"
   (ngSubmit)="onJoinQuizSubmit()"
 >
-  <div class="form-group">
-    <input
-      class="form-control"
-      name="participantName"
-      formControlName="participantName"
-      placeholder="Enter your name"
-    />
-    <input
-      class="form-control"
-      name="quizCode"
-      formControlName="quizCode"
-      placeholder="Enter quiz code"
-    />
+  <div class="form-group" style="margin-bottom: 0px;">
+    <label>
+      Name
+      <input
+        class="form-control"
+        name="participantName"
+        formControlName="participantName"
+        placeholder="Enter your name"
+      />
+    </label>
+    <label>
+      Quiz Code
+      <input
+        class="form-control"
+        name="quizCode"
+        formControlName="quizCode"
+        placeholder="Enter quiz code"
+      />
+    </label>
   </div>
-  <button [disabled]="disableSubmit" type="submit" class="btn btn-primary">
+  <button
+    [disabled]="disableSubmit"
+    type="submit"
+    class="btn custom-btn submit-btn"
+  >
     Submit
   </button>
 </form>

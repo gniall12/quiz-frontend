@@ -1,9 +1,58 @@
-button.btn {
-  background: blue;
-  color: white;
-  margin: 5px 0px;
+:root {
+  --main-bg-color: #ffffff;
+
+  --banner-bg-color-1: #2a1e5c;
+  --banner-bg-color-2: #402d8b;
+  --banner-text-color: #ffffff;
+
+  --main-btn-bg-color: #e63946;
+  --main-btn-text-color: #ffffff;
+
+  --submit-btn-bg-color: #457b9d;
+  --submit-btn-text-color: #ffffff;
+}
+
+html,
+body {
+  font-family: "Righteous", cursive;
+  background: var(--main-bg-color);
+}
+
+.banner {
+  background: var(--banner-bg-color-1);
+  background: linear-gradient(
+    120deg,
+    var(--banner-bg-color-1) 40%,
+    var(--banner-bg-color-2) 40%
+  );
+  color: var(--banner-text-color);
+  padding: 20px 40px;
+}
+
+.title {
+  font-size: 48px;
 }
 
 .wrapper {
   margin: 20px 40px;
+}
+
+.custom-btn {
+  color: white;
+  margin: 5px 0px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 200px;
+}
+
+.main-btn {
+  background: var(--main-btn-bg-color);
+  color: var(--main-btn-text-color);
+  line-height: 2.5;
+}
+
+.submit-btn {
+  background: var(--submit-btn-bg-color);
+  color: var(--submit-btn-text-color);
+  line-height: 1.5;
 }
