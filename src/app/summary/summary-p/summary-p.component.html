@@ -1,6 +1,6 @@
-<h5 *ngIf="quiz">{{ quiz["name"] }}</h5>
+<h4 *ngIf="quiz">{{ quiz["name"] }}</h4>
 
-<h6 *ngIf="numRounds">{{ numRounds }} Rounds</h6>
-<p *ngIf="numQuestions">{{ numQuestions }} Questions</p>
+<p *ngIf="numRounds">{{ numRounds }} Rounds</p>
+<p *ngIf="numQuestions" class="secondary">{{ numQuestions }} Questions</p>
 <br />
 <p>Waiting for quiz to start..</p>

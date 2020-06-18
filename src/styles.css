@@ -1,5 +1,6 @@
 :root {
   --main-bg-color: #ffffff;
+  --main-text-color: #1d3557;
 
   --banner-bg-color-1: #2a1e5c;
   --banner-bg-color-2: #402d8b;
@@ -16,6 +17,7 @@ html,
 body {
   font-family: "Righteous", cursive;
   background: var(--main-bg-color);
+  color: var(--main-text-color);
 }
 
 .banner {
@@ -66,4 +68,20 @@ input,
 .plain-text {
   font-size: 0.9rem;
   font-family: "Montserrat", sans-serif;
+}
+
+p.secondary {
+  opacity: 80%;
+}
+
+.btn-with-icon {
+  padding: 0px;
+  display: block;
+}
+.btn-with-icon-icon {
+  margin: 10px 10px 10px 0px;
+  max-height: 30px;
+}
+.btn-with-icon-text {
+  display: inline;
 }

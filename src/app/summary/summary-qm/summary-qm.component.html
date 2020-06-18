@@ -1,22 +1,43 @@
-<h5 *ngIf="quiz">{{ quiz["name"] }}</h5>
-
-<h6 *ngIf="numRounds">{{ numRounds }} Rounds</h6>
-<p *ngIf="numQuestions">{{ numQuestions }} Questions</p>
-<br />
-<p *ngIf="quiz">Quiz Code: {{ quiz["id"] }}</p>
-<p *ngIf="quiz">Link: {{ baseUrl }}?quiz-id={{ quiz["id"] }}</p>
-<button *ngIf="quiz" class="btn" [cdkCopyToClipboard]="getQuizLink()">
-  Copy Link
-</button>
-
-<h5>Participants</h5>
-<div *ngIf="participants">
-  <div *ngFor="let participant of participants">
-    <span>{{ participant["name"] }}</span>
-    <button (click)="onRemoveParticipant(participant)">Remove</button>
+<div *ngIf="quiz">
+  <div id="quiz-info">
+    <h4>{{ quiz["name"] }}</h4>
+    <h6 *ngIf="numRounds">{{ numRounds }} Rounds</h6>
+    <p *ngIf="numQuestions" class="secondary">{{ numQuestions }} Questions</p>
   </div>
-</div>
 
-<button [disabled]="disableSubmit" class="btn custom-btn submit-btn" (click)="onStartQuiz()">
-  Start Quiz
-</button>
+  <div id="quiz-code">
+    <p>Quiz Code: {{ quiz["id"] }}</p>
+    <button class="btn btn-with-icon" [cdkCopyToClipboard]="getQuizLink()">
+      <img
+        src="assets/copy_link.svg"
+        alt="Copy Link"
+        class="btn-with-icon-icon"
+      />
+      <p class="btn-with-icon-text secondary">Copy Link</p>
+    </button>
+  </div>
+
+  <h5>Participants</h5>
+  <div *ngIf="participants">
+    <p *ngIf="participants.length == 0" class="secondary">
+      No participants yet
+    </p>
+    <div *ngFor="let participant of participants">
+      <p class="participant-name">{{ participant["name"] }}</p>
+      <button
+        (click)="onRemoveParticipant(participant)"
+        class="btn remove-participant-btn"
+      >
+        <img src="assets/remove_x.svg" alt="Remove" />
+      </button>
+    </div>
+  </div>
+
+  <button
+    [disabled]="disableSubmit"
+    class="btn custom-btn submit-btn"
+    (click)="onStartQuiz()"
+  >
+    Start Quiz
+  </button>
+</div>
