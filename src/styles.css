@@ -85,3 +85,7 @@ p.secondary {
 .btn-with-icon-text {
   display: inline;
 }
+
+.question-title {
+  margin-bottom: 0px;
+}
