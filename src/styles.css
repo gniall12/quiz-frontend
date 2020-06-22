@@ -20,6 +20,10 @@ body {
   color: var(--main-text-color);
 }
 
+p {
+  word-break: break-all;
+}
+
 .banner {
   background: var(--banner-bg-color-1);
   background: linear-gradient(
