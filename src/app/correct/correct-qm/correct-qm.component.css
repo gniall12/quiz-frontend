@@ -4,8 +4,10 @@
   font-size: 1.1rem;
 }
 
-.participant-name:hover {
+.participant-name:hover,
+.participant-name-selected {
   text-decoration: underline;
+  color: #e63946;
 }
 
 .answer-wrapper {

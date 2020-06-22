@@ -27,12 +27,19 @@ export class CorrectQmComponent implements OnInit {
   }
 
   onGetAnswers(participant, index) {
-    this.backendService
-      .getAnswers(participant["id"], this.quiz["current_round"])
-      .subscribe((resp) => {
-        console.log(resp);
-        this.participants[index]["answers"] = resp["answers"];
-      });
+    if (participant["selected"]) {
+      participant["selected"] = false;
+      return;
+    }
+    participant["selected"] = true;
+    if (!participant["answers"]) {
+      this.backendService
+        .getAnswers(participant["id"], this.quiz["current_round"])
+        .subscribe((resp) => {
+          console.log(resp);
+          this.participants[index]["answers"] = resp["answers"];
+        });
+    }
   }
 
   onCorrect(answer: object) {

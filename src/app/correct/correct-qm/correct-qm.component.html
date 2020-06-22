@@ -2,11 +2,17 @@
 <p class="plain-text">Click a participant's name to get their answers</p>
 
 <div *ngFor="let participant of participants; let i = index">
-  <p class="participant-name" (click)="onGetAnswers(participant, i)">
+  <p
+    [ngClass]="{
+      'participant-name': true,
+      'participant-name-selected': participant['selected']
+    }"
+    (click)="onGetAnswers(participant, i)"
+  >
     {{ participant["name"] }}
   </p>
 
-  <div *ngIf="participant['answers']">
+  <div *ngIf="participant['selected']">
     <div *ngFor="let answer of participant['answers']; index as i">
       <p class="question-title">Question {{ i + 1 }}</p>
       <p class="plain-text question-text mb-0">{{ answer["question"] }}</p>
