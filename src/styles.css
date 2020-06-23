@@ -93,3 +93,14 @@ p.secondary {
 .question-title {
   margin-bottom: 0px;
 }
+
+.table th {
+  color: var(--main-text-color);
+  opacity: 0.8;
+  border-top: none;
+}
+
+.table th,
+.table td {
+  padding-left: 0px;
+}

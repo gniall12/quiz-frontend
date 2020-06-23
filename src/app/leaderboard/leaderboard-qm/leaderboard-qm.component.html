@@ -1,10 +1,16 @@
 <h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
-<h5>Leaderboard</h5>
+<h5><span *ngIf="finalRound">Final </span>Leaderboard</h5>
 
 <table class="table" *ngIf="participants">
-  <tr *ngFor="let participant of participants">
-    <td>{{ participant["name"] }}</td>
-    <td>{{ participant["score"] }}</td>
+  <tr>
+    <th>Pos</th>
+    <th>Participant</th>
+    <th>Score</th>
+  </tr>
+  <tr *ngFor="let participant of participants; index as i">
+    <td class="plain-text">{{ i + 1 }}</td>
+    <td class="plain-text">{{ participant["name"] }}</td>
+    <td class="plain-text">{{ participant["score"] }}</td>
   </tr>
 </table>
 
@@ -16,5 +22,3 @@
 >
   Proceed
 </button>
-
-<h4 *ngIf="finalRound">End of Quiz!</h4>
