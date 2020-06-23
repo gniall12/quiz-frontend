@@ -129,3 +129,7 @@ p.secondary {
 .table td {
   padding-left: 0px;
 }
+
+.error-message {
+  color: #e63946;
+}

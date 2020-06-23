@@ -12,6 +12,7 @@ export class CreateQuizComponent implements OnInit {
   quizName: string;
   rounds: Array<FormArray>;
   disableSubmit: boolean;
+  emptyFormSubmitted: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
@@ -19,6 +20,7 @@ export class CreateQuizComponent implements OnInit {
     this.getQuizName();
     this.rounds = [new FormArray([])];
     this.disableSubmit = false;
+    this.emptyFormSubmitted = false;
   }
 
   public getQuizName() {
@@ -28,18 +30,24 @@ export class CreateQuizComponent implements OnInit {
   }
 
   public onAddQuestion(round: FormArray) {
+    this.emptyFormSubmitted = false;
     round.push(new FormControl(""));
   }
 
   public onAddRound() {
+    this.emptyFormSubmitted = false;
     this.rounds.push(new FormArray([]));
   }
 
   onSubmit() {
-    this.disableSubmit = true;
     this.removeEmptyQuestions(this.rounds);
     this.removeEmptyRounds(this.rounds);
     const numRounds = this.rounds.length;
+    if (numRounds === 0) {
+      this.emptyFormSubmitted = true;
+      return;
+    }
+    this.disableSubmit = true;
     const questions = this.rounds.map((formdata: FormArray, index: number) => {
       return {
         round_number: index,
