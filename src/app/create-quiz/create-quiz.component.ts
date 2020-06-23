@@ -10,7 +10,7 @@ import { Router } from "@angular/router";
 })
 export class CreateQuizComponent implements OnInit {
   quizName: string;
-  rounds;
+  rounds: Array<FormArray>;
   disableSubmit: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
@@ -27,7 +27,7 @@ export class CreateQuizComponent implements OnInit {
     });
   }
 
-  public onAddQuestion(round) {
+  public onAddQuestion(round: FormArray) {
     round.push(new FormControl(""));
   }
 
@@ -37,8 +37,10 @@ export class CreateQuizComponent implements OnInit {
 
   onSubmit() {
     this.disableSubmit = true;
+    this.removeEmptyQuestions(this.rounds);
+    this.removeEmptyRounds(this.rounds);
     const numRounds = this.rounds.length;
-    const questions = this.rounds.map((formdata, index: number) => {
+    const questions = this.rounds.map((formdata: FormArray, index: number) => {
       return {
         round_number: index,
         questions: formdata.value,
@@ -46,6 +48,20 @@ export class CreateQuizComponent implements OnInit {
     });
     this.backendService.addRounds(questions, numRounds).subscribe((resp) => {
       this.router.navigate(["quizmaster/summary"]);
+    });
+  }
+
+  removeEmptyQuestions(rounds: Array<FormArray>) {
+    rounds.forEach(function (round: FormArray) {
+      round.controls.forEach(function (question: FormControl, index: number) {
+        if (question.value === "") round.controls.splice(index, 1);
+      });
+    });
+  }
+
+  removeEmptyRounds(rounds: Array<FormArray>) {
+    rounds.forEach(function (round: FormArray, index: number) {
+      if (round.controls.length < 1) rounds.splice(index, 1);
     });
   }
 }
