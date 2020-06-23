@@ -32,15 +32,39 @@ p {
     var(--banner-bg-color-2) 40%
   );
   color: var(--banner-text-color);
-  padding: 20px 40px;
+  padding: 20px;
 }
 
 .title {
   font-size: 48px;
 }
 
-.wrapper {
-  margin: 20px 40px;
+.body-wrapper {
+  margin: 20px;
+}
+
+@media (min-width: 500px) {
+  .banner {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .body-wrapper {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .banner {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  .body-wrapper {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
 }
 
 .custom-btn {
