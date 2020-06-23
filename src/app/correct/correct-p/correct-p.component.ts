@@ -10,6 +10,7 @@ import { Subscription } from "rxjs";
 })
 export class CorrectPComponent implements OnInit {
   subscription: Subscription;
+  quiz: object;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
@@ -20,6 +21,9 @@ export class CorrectPComponent implements OnInit {
         this.router.navigate(["participant/leaderboard"]);
       }
     );
+    this.backendService.getQuiz().subscribe((resp) => {
+      this.quiz = resp;
+    });
   }
 
   ngOnDestroy() {

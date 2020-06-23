@@ -1,13 +1,26 @@
 <h3 *ngIf="quizName">{{ quizName }}</h3>
 
 <div *ngFor="let round of rounds; index as j">
-  <h5>Round {{ j }}</h5>
+  <h5>Round {{ j + 1 }}</h5>
   <div *ngFor="let control of round.controls; index as i">
-    <p>Question {{ i }}</p>
+    <p class="question-title">Question {{ i + 1 }}</p>
     <input [formControl]="round.controls[i]" />
   </div>
-  <button class="btn" (click)="onAddQuestion(round)">Add Question</button>
-  <button class="btn" (click)="onAddRound()">Add Round</button>
+  <button class="btn btn-with-icon" (click)="onAddQuestion(round)">
+    <img src="assets/add_question.svg" alt="Add Question" class="btn-with-icon-icon" />
+    <p class="plain-text" class="btn-with-icon-text">Add Question</p>
+  </button>
 </div>
 
-<button [disabled]="disableSubmit" class="btn" (click)="onSubmit()">Submit</button>
+<button class="btn btn-with-icon" (click)="onAddRound()">
+  <img src="assets/add_round.svg" alt="Add Round" class="btn-with-icon-icon" />
+  <p class="plain-text" class="btn-with-icon-text">Add Round</p>
+</button>
+
+<button
+  [disabled]="disableSubmit"
+  class="btn custom-btn submit-btn"
+  (click)="onSubmit()"
+>
+  Submit
+</button>

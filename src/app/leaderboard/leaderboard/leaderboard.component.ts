@@ -19,7 +19,9 @@ export class LeaderboardComponent implements OnInit {
 
   ngOnInit() {
     this.backendService.getParticipants().subscribe((resp) => {
-      this.participants = resp["participants"];
+      this.participants = resp["participants"].sort((p1: object, p2: object) =>
+        p1["score"] > p2["score"] ? -1 : 1
+      );
     });
     this.backendService.getQuiz().subscribe((resp) => {
       this.quiz = resp;

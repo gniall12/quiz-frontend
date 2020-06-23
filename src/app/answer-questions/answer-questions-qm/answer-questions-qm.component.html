@@ -1,9 +1,19 @@
-<h5 *ngIf="quiz">Round {{ quiz['current_round'] }}</h5>
+<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
+<h5 *ngIf="quiz">Round {{ quiz["current_round"] + 1 }}</h5>
 
-<p *ngFor="let question of questions">{{ question['question'] }}</p>
+<div *ngFor="let question of questions; index as i">
+  <p class="question-title">Question {{ i + 1 }}</p>
+  <p class="plain-text">{{ question["question"] }}</p>
+</div>
 
-<br>
+<br />
 
 <p>Waiting for participants to answer</p>
 
-<button [disabled]="disableSubmit" class="btn" (click)="onEndRound()">End Round</button>
+<button
+  [disabled]="disableSubmit"
+  class="btn custom-btn submit-btn"
+  (click)="onEndRound()"
+>
+  End Round
+</button>

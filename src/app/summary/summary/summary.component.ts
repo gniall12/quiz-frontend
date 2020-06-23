@@ -30,7 +30,7 @@ export class SummaryComponent implements OnInit {
       this.numQuestions = questions.length;
       const roundSet = new Set([]);
       questions.forEach((question: object) => {
-        roundSet.add(question["round"]);
+        roundSet.add(question["round_number"]);
       });
       this.numRounds = roundSet.size;
     });

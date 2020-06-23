@@ -1,38 +1,55 @@
-<h6 *ngIf="quiz">Round {{ quiz["current_round"] }}</h6>
+<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
+<h6 *ngIf="quiz">Round {{ quiz["current_round"] + 1 }}</h6>
+<p class="plain-text">Click a participant's name to get their answers</p>
+
 <div *ngFor="let participant of participants; let i = index">
-  <h5>{{ participant["name"] }}</h5>
-  <button class="btn" (click)="onGetAnswers(participant, i)">
-    Get Answers
-  </button>
-  <div *ngIf="participant['answers']">
-    <div *ngFor="let answer of participant['answers']">
-      <p>{{ answer["question"] }}</p>
-      <div class="row">
-        <div class="col-md-6">
-          <p>{{ answer["answer"] }}</p>
-        </div>
-        <div class="col-md-3">
-          <button
-            class="btn"
-            [style.border]="
-              answer['correct'] === 1 ? '3px solid green' : 'none'
-            "
-            (click)="onCorrect(answer)"
-          >
-            Correct
-          </button>
-        </div>
-        <div class="col-md-3">
-          <button
-            class="btn"
-            [style.border]="answer['correct'] === -1 ? '3px solid red' : 'none'"
-            (click)="onIncorrect(answer)"
-          >
-            Incorrect
-          </button>
-        </div>
+  <p
+    [ngClass]="{
+      'participant-name': true,
+      'participant-name-selected': participant['selected']
+    }"
+    (click)="onGetAnswers(participant, i)"
+  >
+    {{ participant["name"] }}
+  </p>
+
+  <div *ngIf="participant['selected']">
+    <div *ngFor="let answer of participant['answers']; index as i">
+      <p class="question-title">Question {{ i + 1 }}</p>
+      <p class="plain-text question-text mb-0">{{ answer["question"] }}</p>
+      <div class="answer-wrapper">
+        <p class="plain-text answer-text mb-0">
+          {{ answer["answer"] }}
+        </p>
+        <button class="btn btn-with-icon" (click)="onCorrect(answer)">
+          <img
+            src="assets/tick.svg"
+            alt="Correct"
+            [ngStyle]="{
+              filter: answer['correct'] === 1 ? 'none' : 'grayscale(1)'
+            }"
+          />
+        </button>
+        <button class="btn btn-with-icon" (click)="onIncorrect(answer)">
+          <img
+            src="assets/x.svg"
+            alt="Correct"
+            [ngStyle]="{
+              filter: answer['correct'] === -1 ? 'none' : 'grayscale(1)'
+            }"
+          />
+        </button>
       </div>
     </div>
   </div>
 </div>
-<button [disabled]="disableSubmit" class="btn" (click)="onProceed()">Proceed</button>
+
+<br />
+
+<button
+  [disabled]="disableSubmit"
+  class="btn custom-btn submit-btn"
+  (click)="onProceed()"
+>
+  Proceed
+</button>

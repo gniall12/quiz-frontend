@@ -1,3 +1,22 @@
-.btn {
-  background-color: #acacac;
+.participant-name {
+  display: inline;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.participant-name:hover,
+.participant-name-selected {
+  text-decoration: underline;
+  color: #e63946;
+}
+
+.answer-wrapper {
+  display: grid;
+  grid-template-columns: 5fr 1fr 1fr;
+  grid-gap: 10px;
+  align-items: center;
+}
+
+.answer-text {
+  font-style: italic;
 }

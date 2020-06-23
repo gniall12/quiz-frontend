@@ -1,9 +1,131 @@
-button.btn {
-  background: blue;
-  color: white;
-  margin: 5px 0px;
+:root {
+  --main-bg-color: #ffffff;
+  --main-text-color: #1d3557;
+
+  --banner-bg-color-1: #2a1e5c;
+  --banner-bg-color-2: #402d8b;
+  --banner-text-color: #ffffff;
+
+  --main-btn-bg-color: #e63946;
+  --main-btn-text-color: #ffffff;
+
+  --submit-btn-bg-color: #457b9d;
+  --submit-btn-text-color: #ffffff;
 }
 
-.wrapper {
-  margin: 20px 40px;
+html,
+body {
+  font-family: "Righteous", cursive;
+  background: var(--main-bg-color);
+  color: var(--main-text-color);
+}
+
+p {
+  word-break: break-all;
+}
+
+.banner {
+  background: var(--banner-bg-color-1);
+  background: linear-gradient(
+    120deg,
+    var(--banner-bg-color-1) 40%,
+    var(--banner-bg-color-2) 40%
+  );
+  color: var(--banner-text-color);
+  padding: 20px;
+}
+
+.title {
+  font-size: 48px;
+}
+
+.body-wrapper {
+  margin: 20px;
+}
+
+@media (min-width: 500px) {
+  .banner {
+    padding-left: 50px;
+    padding-right: 50px;
+  }
+
+  .body-wrapper {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .banner {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+
+  .body-wrapper {
+    margin-left: 100px;
+    margin-right: 100px;
+  }
+}
+
+.custom-btn {
+  color: white;
+  margin: 5px 0px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 200px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.main-btn {
+  background: var(--main-btn-bg-color);
+  color: var(--main-btn-text-color);
+  line-height: 2.5;
+}
+
+.submit-btn {
+  background: var(--submit-btn-bg-color);
+  color: var(--submit-btn-text-color);
+  line-height: 1.5;
+}
+
+input {
+  width: 100%;
+}
+
+input,
+.form-control,
+.plain-text {
+  font-size: 0.9rem;
+  font-family: "Montserrat", sans-serif;
+}
+
+p.secondary {
+  opacity: 0.8;
+}
+
+.btn-with-icon {
+  padding: 0px;
+  display: block;
+}
+.btn-with-icon-icon {
+  margin: 10px 10px 10px 0px;
+  max-height: 30px;
+}
+.btn-with-icon-text {
+  display: inline;
+}
+
+.question-title {
+  margin-bottom: 0px;
+}
+
+.table th {
+  color: var(--main-text-color);
+  opacity: 0.8;
+  border-top: none;
+}
+
+.table th,
+.table td {
+  padding-left: 0px;
 }

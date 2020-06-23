@@ -1,4 +1,5 @@
-<h5 *ngIf="quiz">Round {{ quiz["current_round"] }}</h5>
+<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
+<h5 *ngIf="quiz">Round {{ quiz["current_round"] + 1 }}</h5>
 
 <form
   *ngIf="answersFormData && answersFormData.controls"
@@ -6,8 +7,12 @@
   (ngSubmit)="onClickSubmit()"
 >
   <div class="form-group">
-    <div *ngFor="let question of questions">
-      <p>{{ question["question"] }}</p>
+    <div
+      *ngFor="let question of questions; index as i"
+      class="question-container"
+    >
+      <p class="question-title">Question {{ i + 1 }}</p>
+      <p class="plain-text question-text">{{ question["question"] }}</p>
       <input
         class="form-control"
         [formControlName]="question['question']"
@@ -15,5 +20,10 @@
       />
     </div>
   </div>
-  <button [disabled]="disableSubmit || submitted" class="btn">Submit</button>
+  <button
+    [disabled]="disableSubmit || submitted"
+    class="btn custom-btn submit-btn"
+  >
+    Submit
+  </button>
 </form>
