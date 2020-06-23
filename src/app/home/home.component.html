@@ -1,4 +1,12 @@
-<button class="btn custom-btn main-btn" (click)="onCreateQuiz()">
+<button
+  [ngClass]="{
+    btn: true,
+    'custom-btn': true,
+    'main-btn': true,
+    greyed: joinQuiz
+  }"
+  (click)="onCreateQuiz()"
+>
   Create a Quiz
 </button>
 
@@ -29,7 +37,15 @@
 
 <br />
 
-<button class="btn custom-btn main-btn" (click)="onJoinQuiz()">
+<button
+  [ngClass]="{
+    btn: true,
+    'custom-btn': true,
+    'main-btn': true,
+    greyed: createQuiz
+  }"
+  (click)="onJoinQuiz()"
+>
   Join a Quiz
 </button>
 <form
