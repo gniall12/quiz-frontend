@@ -12,6 +12,7 @@ export class CorrectQmComponent implements OnInit {
   participants: Array<object>;
   participantAnswers: Array<object>;
   disableSubmit: boolean;
+  uncorrected: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
@@ -24,6 +25,7 @@ export class CorrectQmComponent implements OnInit {
     });
     this.participantAnswers = [];
     this.disableSubmit = false;
+    this.uncorrected = false;
   }
 
   onGetAnswers(participant, index) {
@@ -43,27 +45,47 @@ export class CorrectQmComponent implements OnInit {
   }
 
   onCorrect(answer: object) {
+    this.uncorrected = false;
     answer["correct"] = 1;
   }
 
   onIncorrect(answer: object) {
+    this.uncorrected = false;
     answer["correct"] = -1;
   }
 
   onProceed() {
-    this.disableSubmit = true;
-    this.participants.forEach(function (participant: Array<object>) {
-      let numCorrect = 0;
-      participant["answers"].forEach(function (answer) {
-        if (answer["correct"] === 1) numCorrect += 1;
+    if (!this.checkAllAnswersCorrected()) {
+      this.uncorrected = true;
+    } else {
+      this.disableSubmit = true;
+      this.participants.forEach(function (participant: Array<object>) {
+        let numCorrect = 0;
+        participant["answers"].forEach(function (answer) {
+          if (answer["correct"] === 1) numCorrect += 1;
+        });
+        participant["score"] = participant["score"] + numCorrect;
       });
-      participant["score"] = participant["score"] + numCorrect;
-    });
 
-    this.backendService
-      .setParticipantScores(this.participants)
-      .subscribe((resp) => {
-        this.router.navigate(["quizmaster/leaderboard"]);
-      });
+      this.backendService
+        .setParticipantScores(this.participants)
+        .subscribe((resp) => {
+          this.router.navigate(["quizmaster/leaderboard"]);
+        });
+    }
+  }
+
+  checkAllAnswersCorrected(): boolean {
+    for (const participant of this.participants) {
+      if (typeof participant["answers"] === "undefined") {
+        return false;
+      }
+      for (const answer of participant["answers"]) {
+        if (typeof answer["correct"] === "undefined") {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
