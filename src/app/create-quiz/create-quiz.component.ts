@@ -62,9 +62,9 @@ export class CreateQuizComponent implements OnInit {
   removeEmptyQuestions(rounds: Array<FormArray>) {
     rounds.forEach(function (round: FormArray) {
       // Use for loop instead of forEach to allow removing multiple items
-      for (let i = round.controls.length - 1; i >= 0; i--) {
-        if (round.controls[i].value === "") {
-          round.controls.splice(i, 1);
+      for (let i = round.value.length - 1; i >= 0; i--) {
+        if (round.value[i] === "") {
+          round.value.splice(i, 1);
         }
       }
     });
@@ -73,7 +73,7 @@ export class CreateQuizComponent implements OnInit {
   removeEmptyRounds(rounds: Array<FormArray>) {
     // Use for loop instead of forEach to allow removing multiple items
     for (let i = rounds.length - 1; i >= 0; i--) {
-      if (rounds[i].length < 1) {
+      if (rounds[i].value.length < 1) {
         rounds.splice(i, 1);
       }
     }
