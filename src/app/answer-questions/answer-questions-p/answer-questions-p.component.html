@@ -56,13 +56,18 @@
         Are you sure you want to submit?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn custom-btn greyed" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn custom-btn greyed"
+          data-dismiss="modal"
+        >
           No
         </button>
         <button
           type="button"
           class="btn custom-btn submit-btn"
           (click)="onClickSubmit(true)"
+          data-dismiss="modal"
         >
           Yes
         </button>
