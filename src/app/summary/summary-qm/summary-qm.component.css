@@ -3,15 +3,11 @@
   margin-bottom: 20px;
 }
 
-#quiz-code > p {
-  margin-bottom: 0px;
-}
-
 .participant-name {
   display: inline;
 }
 
-.remove-participant-btn {
+#remove-participant-btn {
   padding: 0px 10px;
   border: 0px;
   vertical-align: text-bottom;

@@ -6,14 +6,14 @@
   </div>
 
   <div id="quiz-code">
-    <p>Quiz Code: {{ quiz["id"] }}</p>
+    <p class="mb-0">Quiz Code: {{ quiz["id"] }}</p>
     <button class="btn btn-with-icon" [cdkCopyToClipboard]="getQuizLink()">
       <img
         src="assets/copy_link.svg"
         alt="Copy Link"
         class="btn-with-icon-icon"
       />
-      <p class="btn-with-icon-text secondary">Copy Link</p>
+      <p class="btn-with-icon-text secondary mb-0">Copy Link</p>
     </button>
   </div>
 
@@ -26,7 +26,8 @@
       <p class="participant-name">{{ participant["name"] }}</p>
       <button
         (click)="onRemoveParticipant(participant)"
-        class="btn remove-participant-btn"
+        id="remove-participant-btn"
+        class="btn"
       >
         <img src="assets/remove_x.svg" alt="Remove" />
       </button>

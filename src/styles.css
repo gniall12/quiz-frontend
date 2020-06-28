@@ -16,7 +16,7 @@
 html,
 body {
   font-family: "Righteous", cursive;
-  background: var(--main-bg-color);
+  background-color: var(--main-bg-color);
   color: var(--main-text-color);
 }
 
@@ -24,8 +24,8 @@ p {
   word-break: break-all;
 }
 
-.banner {
-  background: var(--banner-bg-color-1);
+#banner {
+  background-color: var(--banner-bg-color-1);
   background: linear-gradient(
     120deg,
     var(--banner-bg-color-1) 40%,
@@ -35,33 +35,33 @@ p {
   padding: 20px;
 }
 
-.title {
-  font-size: 48px;
+#title {
+  font-size: 3rem;
 }
 
-.body-wrapper {
+#body-wrapper {
   margin: 20px;
 }
 
 @media (min-width: 500px) {
-  .banner {
+  #banner {
     padding-left: 50px;
     padding-right: 50px;
   }
 
-  .body-wrapper {
+  #body-wrapper {
     margin-left: 50px;
     margin-right: 50px;
   }
 }
 
 @media (min-width: 1000px) {
-  .banner {
+  #banner {
     padding-left: 100px;
     padding-right: 100px;
   }
 
-  .body-wrapper {
+  #body-wrapper {
     margin-left: 100px;
     margin-right: 100px;
   }
@@ -77,13 +77,13 @@ p {
 }
 
 .main-btn {
-  background: var(--main-btn-bg-color);
+  background-color: var(--main-btn-bg-color);
   color: var(--main-btn-text-color);
   line-height: 2.5;
 }
 
 .submit-btn {
-  background: var(--submit-btn-bg-color);
+  background-color: var(--submit-btn-bg-color);
   color: var(--submit-btn-text-color);
   line-height: 1.5;
 }
@@ -127,11 +127,6 @@ p.secondary {
   color: var(--main-text-color);
   opacity: 0.8;
   border-top: none;
-}
-
-.table th,
-.table td {
-  padding-left: 0px;
 }
 
 .error-message {
