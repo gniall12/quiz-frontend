@@ -26,7 +26,8 @@
       <p class="participant-name">{{ participant["name"] }}</p>
       <button
         (click)="onRemoveParticipant(participant)"
-        class="btn remove-participant-btn"
+        id="remove-participant-btn"
+        class="btn"
       >
         <img src="assets/remove_x.svg" alt="Remove" />
       </button>

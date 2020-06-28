@@ -24,7 +24,7 @@ p {
   word-break: break-all;
 }
 
-.banner {
+#banner {
   background-color: var(--banner-bg-color-1);
   background: linear-gradient(
     120deg,
@@ -35,33 +35,33 @@ p {
   padding: 20px;
 }
 
-.title {
+#title {
   font-size: 3rem;
 }
 
-.body-wrapper {
+#body-wrapper {
   margin: 20px;
 }
 
 @media (min-width: 500px) {
-  .banner {
+  #banner {
     padding-left: 50px;
     padding-right: 50px;
   }
 
-  .body-wrapper {
+  #body-wrapper {
     margin-left: 50px;
     margin-right: 50px;
   }
 }
 
 @media (min-width: 1000px) {
-  .banner {
+  #banner {
     padding-left: 100px;
     padding-right: 100px;
   }
 
-  .body-wrapper {
+  #body-wrapper {
     margin-left: 100px;
     margin-right: 100px;
   }
