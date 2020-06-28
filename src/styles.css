@@ -16,7 +16,7 @@
 html,
 body {
   font-family: "Righteous", cursive;
-  background: var(--main-bg-color);
+  background-color: var(--main-bg-color);
   color: var(--main-text-color);
 }
 
@@ -25,7 +25,7 @@ p {
 }
 
 .banner {
-  background: var(--banner-bg-color-1);
+  background-color: var(--banner-bg-color-1);
   background: linear-gradient(
     120deg,
     var(--banner-bg-color-1) 40%,
@@ -77,13 +77,13 @@ p {
 }
 
 .main-btn {
-  background: var(--main-btn-bg-color);
+  background-color: var(--main-btn-bg-color);
   color: var(--main-btn-text-color);
   line-height: 2.5;
 }
 
 .submit-btn {
-  background: var(--submit-btn-bg-color);
+  background-color: var(--submit-btn-bg-color);
   color: var(--submit-btn-text-color);
   line-height: 1.5;
 }
