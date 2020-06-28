@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { BackendService } from "../backend.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DataService } from "../data.service";
@@ -27,11 +27,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.createFormdata = new FormGroup({
-      quizName: new FormControl(),
+      quizName: new FormControl("", [Validators.required]),
     });
     this.joinFormdata = new FormGroup({
-      participantName: new FormControl(),
-      quizCode: new FormControl(),
+      participantName: new FormControl("", [Validators.required]),
+      quizCode: new FormControl("", [Validators.required]),
     });
     this.route.queryParams.subscribe((params) => {
       if (params["quiz-id"]) {

@@ -5,3 +5,12 @@
 .question-text {
   margin-bottom: 5px;
 }
+
+.modal div {
+  border-bottom-color: transparent;
+  border-top-color: transparent;
+}
+
+.modal button {
+  max-width: 100px;
+}

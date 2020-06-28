@@ -1,9 +1,10 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { BackendService } from "../../backend.service";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
 import { AnswerQuestionsComponent } from "../answer-questions/answer-questions.component";
+declare var $: any;
 
 @Component({
   selector: "app-answer-questions-p",
@@ -29,7 +30,7 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
       this.questions.forEach((question) => {
         this.answersFormData.addControl(
           question["question"],
-          new FormControl()
+          new FormControl("", [Validators.required])
         );
       });
     });
@@ -48,10 +49,14 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     this.submitted = false;
   }
 
-  onClickSubmit() {
-    this.submitAnswers().subscribe((resp) => {
-      this.submitted = true;
-    });
+  onClickSubmit(confirmedSubmit: boolean) {
+    if (!confirmedSubmit && this.answersFormData.invalid) {
+      $("#confirmSubmitModal").modal("show");
+    } else {
+      this.submitAnswers().subscribe((resp) => {
+        this.submitted = true;
+      });
+    }
   }
 
   submitAnswers(): Observable<object> {

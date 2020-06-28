@@ -88,6 +88,10 @@ p {
   line-height: 1.5;
 }
 
+.greyed {
+  background-color: #e0e0e0;
+}
+
 input {
   width: 100%;
 }
@@ -128,4 +132,8 @@ p.secondary {
 .table th,
 .table td {
   padding-left: 0px;
+}
+
+.error-message {
+  color: #e63946;
 }

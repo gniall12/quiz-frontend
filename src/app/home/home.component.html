@@ -27,7 +27,7 @@
     </label>
   </div>
   <button
-    [disabled]="disableSubmit"
+    [disabled]="disableSubmit || createFormdata.invalid"
     type="submit"
     class="btn custom-btn submit-btn"
   >
@@ -74,7 +74,7 @@
     </label>
   </div>
   <button
-    [disabled]="disableSubmit"
+    [disabled]="disableSubmit || joinFormdata.invalid"
     type="submit"
     class="btn custom-btn submit-btn"
   >
