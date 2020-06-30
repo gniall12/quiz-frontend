@@ -3,4 +3,6 @@
 <h6 *ngIf="numRounds">{{ numRounds }} Rounds</h6>
 <p *ngIf="numQuestions" class="secondary">{{ numQuestions }} Questions</p>
 <br />
-<p>Waiting for quiz to start..</p>
+<p *ngIf="!participantRemoved">Waiting for quiz to start..</p>
+
+<p *ngIf="participantRemoved">You have been removed!</p>
