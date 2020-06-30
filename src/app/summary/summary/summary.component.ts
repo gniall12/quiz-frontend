@@ -1,16 +1,20 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
+import { interval, empty, Subscription } from "rxjs";
+import { startWith, mergeMap, catchError } from "rxjs/operators";
 
 @Component({
   selector: "app-summary",
   template: `No Template`,
   styleUrls: ["./summary.component.css"],
 })
-export class SummaryComponent implements OnInit {
+export class SummaryComponent implements OnInit, OnDestroy {
   quiz: object;
   numRounds: number;
   numQuestions: number;
+  participantSubscription: Subscription;
+  participants: Array<object>;
 
   constructor(
     protected backendService: BackendService,
@@ -34,5 +38,24 @@ export class SummaryComponent implements OnInit {
       });
       this.numRounds = roundSet.size;
     });
+    this.participantSubscription = interval(5000)
+      .pipe(
+        startWith(0),
+        mergeMap((obs) =>
+          this.backendService.getParticipants().pipe(
+            catchError((error) => {
+              this.participants = [];
+              return empty();
+            })
+          )
+        )
+      )
+      .subscribe((res) => {
+        this.participants = res["participants"];
+      });
+  }
+
+  ngOnDestroy() {
+    this.participantSubscription.unsubscribe();
   }
 }
