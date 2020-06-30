@@ -39,6 +39,7 @@ export class SummaryPComponent extends SummaryComponent implements OnInit {
         return false;
       }
     }
+    this.subscription.unsubscribe();
     return true;
   }
 
