@@ -12,6 +12,8 @@ import { DataService } from "src/app/data.service";
 })
 export class SummaryPComponent extends SummaryComponent implements OnInit {
   subscription: Subscription;
+  participantRemoved: boolean;
+  participantRemoveSub: Subscription;
 
   constructor(
     protected backendService: BackendService,
@@ -27,23 +29,29 @@ export class SummaryPComponent extends SummaryComponent implements OnInit {
     this.subscription = this.backendService.changeViewEvent$.subscribe(() => {
       this.router.navigate(["participant/answer-questions"]);
     });
+    this.participantRemoveSub = this.participantObs.subscribe(() => {
+      this.checkParticipantRemoved();
+    });
   }
 
-  participantRemoved(): boolean {
-    if (typeof this.participants === "undefined") {
-      return false;
+  checkParticipantRemoved() {
+    if (this.participants.length === 0) {
+      this.participantRemoved = true;
+      return;
     }
     const participantId = this.dataService.getParticipantId();
     for (const participant of this.participants) {
       if (participant["id"].toString() === participantId) {
-        return false;
+        this.participantRemoved = false;
+        return;
       }
     }
     this.subscription.unsubscribe();
-    return true;
+    this.participantRemoved = true;
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.participantRemoveSub.unsubscribe();
   }
 }

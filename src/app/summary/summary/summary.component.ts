@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
-import { interval, empty, Subscription } from "rxjs";
+import { interval, Subscription, Observable, of } from "rxjs";
 import { startWith, mergeMap, catchError } from "rxjs/operators";
 
 @Component({
@@ -15,6 +15,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
   numQuestions: number;
   participantSubscription: Subscription;
   participants: Array<object>;
+  participantObs: Observable<object>;
 
   constructor(
     protected backendService: BackendService,
@@ -26,6 +27,20 @@ export class SummaryComponent implements OnInit, OnDestroy {
       this.quiz = resp;
     });
     this.loadRounds();
+    this.participantObs = interval(5000).pipe(
+      startWith(0),
+      mergeMap(() =>
+        this.backendService.getParticipants().pipe(
+          catchError(() => {
+            this.participants = [];
+            return of({});
+          })
+        )
+      )
+    );
+    this.participantSubscription = this.participantObs.subscribe((res) => {
+      this.participants = res["participants"];
+    });
   }
 
   public loadRounds() {
@@ -38,21 +53,6 @@ export class SummaryComponent implements OnInit, OnDestroy {
       });
       this.numRounds = roundSet.size;
     });
-    this.participantSubscription = interval(5000)
-      .pipe(
-        startWith(0),
-        mergeMap((obs) =>
-          this.backendService.getParticipants().pipe(
-            catchError((error) => {
-              this.participants = [];
-              return empty();
-            })
-          )
-        )
-      )
-      .subscribe((res) => {
-        this.participants = res["participants"];
-      });
   }
 
   ngOnDestroy() {
