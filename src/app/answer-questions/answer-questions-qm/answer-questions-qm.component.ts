@@ -26,8 +26,8 @@ export class AnswerQuestionsQmComponent extends AnswerQuestionsComponent
 
   onEndRound() {
     this.disableSubmit = true;
-    this.backendService.changePage().subscribe((resp) => {
-      this.router.navigate(["quizmaster/correct"]);
+    this.backendService.updateQuiz("correct", null).subscribe((resp) => {
+      this.router.navigate([`quizmaster/${resp["current_page"]}`]);
     });
   }
 }
