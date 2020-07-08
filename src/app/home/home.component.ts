@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { BackendService } from "../backend.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DataService } from "../data.service";
+import { Quiz } from "../interfaces/quiz";
 
 @Component({
   selector: "app-home",
@@ -55,9 +56,8 @@ export class HomeComponent implements OnInit {
   public onCreateQuizSubmit() {
     this.disableSubmit = true;
     const quizName: string = this.createFormdata.controls["quizName"].value;
-    this.backendService.createQuiz(quizName).subscribe((resp) => {
-      console.log(resp);
-      this.dataService.setQuizId(resp["id"]);
+    this.backendService.createQuiz(quizName).subscribe((quiz: Quiz) => {
+      this.dataService.setQuizId(quiz.id.toString());
       this.router.navigate(["create-quiz"]);
     });
   }
@@ -77,8 +77,8 @@ export class HomeComponent implements OnInit {
       (error) => {
         this.disableSubmit = false;
         this.joinErrorMessage = error["error"]["message"];
-        if(error.status == 404)
-          this.joinErrorMessage += ". Did you enter the right code?"
+        if (error.status == 404)
+          this.joinErrorMessage += ". Did you enter the right code?";
       }
     );
   }

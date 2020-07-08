@@ -4,6 +4,7 @@ import { switchMap, map } from "rxjs/operators";
 import { Subject, forkJoin, concat, Observable } from "rxjs";
 import { DataService } from "./data.service";
 import { environment } from "./../environments/environment";
+import { Quiz } from "./interfaces/quiz";
 
 @Injectable({
   providedIn: "root",
@@ -36,33 +37,33 @@ export class BackendService {
 
   // Quiz
 
-  createQuiz(quizName: string): Observable<object> {
+  createQuiz(quizName: string): Observable<Quiz> {
     const body = {
       name: quizName,
     };
-    return this.http.post(`${this.backendUrl}/quiz`, body);
+    return this.http.post<Quiz>(`${this.backendUrl}/quiz`, body);
   }
 
-  getQuiz(): Observable<object> {
+  getQuiz(): Observable<Quiz> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/quiz/${quizId}`);
+    return this.http.get<Quiz>(`${this.backendUrl}/quiz/${quizId}`);
   }
 
-  setNumRounds(numRounds: number): Observable<object> {
+  setNumRounds(numRounds: number): Observable<Quiz> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       number_rounds: numRounds,
     };
-    return this.http.put(`${this.backendUrl}/quiz/${quizId}`, body);
+    return this.http.put<Quiz>(`${this.backendUrl}/quiz/${quizId}`, body);
   }
 
-  updateQuiz(currentPage: string, currentRound: number): Observable<object> {
+  updateQuiz(currentPage: string, currentRound: number): Observable<Quiz> {
     const body = { current_page: currentPage };
     if (currentRound !== null) {
       body["current_round"] = currentRound;
     }
     const quizId: string = this.dataService.getQuizId();
-    return this.http.put(`${this.backendUrl}/quiz/${quizId}`, body);
+    return this.http.put<Quiz>(`${this.backendUrl}/quiz/${quizId}`, body);
   }
 
   // Questions
@@ -87,11 +88,11 @@ export class BackendService {
 
   getQuizAndRoundQuestions(): Observable<object> {
     return this.getQuiz().pipe(
-      switchMap((resp) => {
-        const roundNum = resp["current_round"];
+      switchMap((quiz) => {
+        const roundNum = quiz.current_round;
         return this.getRoundQuestions(roundNum).pipe(
           map((resp2) => {
-            return { quiz: resp, questions: resp2 };
+            return { quiz: quiz, questions: resp2 };
           })
         );
       })

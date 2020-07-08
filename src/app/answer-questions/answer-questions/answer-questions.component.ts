@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
 import { map } from "rxjs/operators";
+import { Quiz } from "src/app/interfaces/quiz";
 
 @Component({
   selector: "app-answer-questions",
@@ -10,7 +11,7 @@ import { map } from "rxjs/operators";
 })
 export class AnswerQuestionsComponent implements OnInit {
   questions: Array<object>;
-  quiz: object;
+  quiz: Quiz;
 
   constructor(
     protected backendService: BackendService,

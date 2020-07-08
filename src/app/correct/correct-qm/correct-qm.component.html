@@ -1,5 +1,5 @@
-<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
-<h6 *ngIf="quiz">Round {{ quiz["current_round"] + 1 }}</h6>
+<h3 *ngIf="quiz">{{ quiz.name }}</h3>
+<h6 *ngIf="quiz">Round {{ quiz.current_round + 1 }}</h6>
 <p class="plain-text">Click a participant's name to get their answers</p>
 
 <div *ngFor="let participant of participants; let i = index">

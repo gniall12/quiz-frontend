@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
+import { Quiz } from "src/app/interfaces/quiz";
 
 @Component({
   selector: "app-leaderboard",
@@ -9,7 +10,7 @@ import { Router } from "@angular/router";
 })
 export class LeaderboardComponent implements OnInit {
   participants: Array<object>;
-  quiz: object;
+  quiz: Quiz;
   finalRound: boolean;
 
   constructor(
@@ -23,10 +24,9 @@ export class LeaderboardComponent implements OnInit {
         p1["score"] > p2["score"] ? -1 : 1
       );
     });
-    this.backendService.getQuiz().subscribe((resp) => {
-      this.quiz = resp;
-      this.finalRound =
-        this.quiz["current_round"] === this.quiz["number_rounds"] - 1;
+    this.backendService.getQuiz().subscribe((quiz: Quiz) => {
+      this.quiz = quiz;
+      this.finalRound = this.quiz.current_round === this.quiz.number_rounds - 1;
     });
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { BackendService } from "../../backend.service";
 import { Subscription } from "rxjs";
+import { Quiz } from "src/app/interfaces/quiz";
 
 @Component({
   selector: "app-correct-p",
@@ -10,7 +11,7 @@ import { Subscription } from "rxjs";
 })
 export class CorrectPComponent implements OnInit {
   subscription: Subscription;
-  quiz: object;
+  quiz: Quiz;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
@@ -23,7 +24,7 @@ export class CorrectPComponent implements OnInit {
           this.router.navigate([`participant/${quizCurrentPage}`]);
       }
     );
-    this.backendService.getQuiz().subscribe((resp) => {
+    this.backendService.getQuiz().subscribe((resp: Quiz) => {
       this.quiz = resp;
     });
   }

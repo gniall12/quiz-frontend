@@ -1,12 +1,12 @@
 <div *ngIf="quiz">
   <div id="quiz-info">
-    <h3>{{ quiz["name"] }}</h3>
+    <h3>{{ quiz.name }}</h3>
     <h6 *ngIf="numRounds">{{ numRounds }} Rounds</h6>
     <p *ngIf="numQuestions" class="secondary">{{ numQuestions }} Questions</p>
   </div>
 
   <div id="quiz-code">
-    <p class="mb-0">Quiz Code: {{ quiz["id"] }}</p>
+    <p class="mb-0">Quiz Code: {{ quiz.id }}</p>
     <button class="btn btn-with-icon" [cdkCopyToClipboard]="getQuizLink()">
       <img
         src="assets/copy_link.svg"

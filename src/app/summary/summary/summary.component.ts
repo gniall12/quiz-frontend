@@ -3,6 +3,7 @@ import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
 import { interval, Subscription, Observable, of } from "rxjs";
 import { startWith, mergeMap, catchError } from "rxjs/operators";
+import { Quiz } from "src/app/interfaces/quiz";
 
 @Component({
   selector: "app-summary",
@@ -10,7 +11,7 @@ import { startWith, mergeMap, catchError } from "rxjs/operators";
   styleUrls: ["./summary.component.css"],
 })
 export class SummaryComponent implements OnInit, OnDestroy {
-  quiz: object;
+  quiz: Quiz;
   numRounds: number;
   numQuestions: number;
   participantSubscription: Subscription;
@@ -23,8 +24,8 @@ export class SummaryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.backendService.getQuiz().subscribe((resp) => {
-      this.quiz = resp;
+    this.backendService.getQuiz().subscribe((quiz: Quiz) => {
+      this.quiz = quiz;
     });
     this.loadRounds();
     this.participantObs = interval(5000).pipe(

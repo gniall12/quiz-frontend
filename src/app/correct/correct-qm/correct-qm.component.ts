@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BackendService } from "../../backend.service";
 import { Router } from "@angular/router";
+import { Quiz } from "src/app/interfaces/quiz";
 
 @Component({
   selector: "app-correct-qm",
@@ -8,7 +9,7 @@ import { Router } from "@angular/router";
   styleUrls: ["./correct-qm.component.css"],
 })
 export class CorrectQmComponent implements OnInit {
-  quiz: object;
+  quiz: Quiz;
   participants: Array<object>;
   participantAnswers: Array<object>;
   disableSubmit: boolean;
@@ -20,7 +21,7 @@ export class CorrectQmComponent implements OnInit {
     this.backendService.getParticipants().subscribe((resp) => {
       this.participants = resp["participants"];
     });
-    this.backendService.getQuiz().subscribe((resp) => {
+    this.backendService.getQuiz().subscribe((resp: Quiz) => {
       this.quiz = resp;
     });
     this.participantAnswers = [];
@@ -36,7 +37,7 @@ export class CorrectQmComponent implements OnInit {
     participant["selected"] = true;
     if (!participant["answers"]) {
       this.backendService
-        .getAnswers(participant["id"], this.quiz["current_round"])
+        .getAnswers(participant["id"], this.quiz.current_round)
         .subscribe((resp) => {
           console.log(resp);
           this.participants[index]["answers"] = resp["answers"];
