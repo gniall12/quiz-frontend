@@ -17,8 +17,10 @@ export class CorrectPComponent implements OnInit {
   ngOnInit() {
     this.backendService.connectToChangeNotifications();
     this.subscription = this.backendService.changeViewEvent$.subscribe(
-      (resp) => {
-        this.router.navigate(["participant/leaderboard"]);
+      (quizCurrentPage) => {
+        const activeRoute = this.router.url.split("/").pop();
+        if (activeRoute !== quizCurrentPage)
+          this.router.navigate([`participant/${quizCurrentPage}`]);
       }
     );
     this.backendService.getQuiz().subscribe((resp) => {

@@ -36,16 +36,23 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     });
     this.answersFormData = new FormGroup({});
     this.backendService.connectToChangeNotifications();
-    this.subscription = this.backendService.changeViewEvent$.subscribe(() => {
-      if (this.submitted) {
-        this.router.navigate(["participant/correct"]);
-      } else {
-        this.submitAnswers().subscribe((resp) => {
-          this.submitted = true;
-          this.router.navigate(["participant/correct"]);
-        });
+    // Complicated block - find alternative method
+    this.subscription = this.backendService.changeViewEvent$.subscribe(
+      (quizCurrentPage) => {
+        const activeRoute = this.router.url.split("/").pop();
+        if (activeRoute !== quizCurrentPage) {
+          const nextRoute = `participant/${quizCurrentPage}`;
+          if (this.submitted) {
+            this.router.navigate([nextRoute]);
+          } else {
+            this.submitAnswers().subscribe(() => {
+              this.submitted = true;
+              this.router.navigate([nextRoute]);
+            });
+          }
+        }
       }
-    });
+    );
     this.submitted = false;
   }
 
