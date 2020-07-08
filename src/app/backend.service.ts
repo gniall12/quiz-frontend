@@ -23,19 +23,15 @@ export class BackendService {
   connectToChangeNotifications(): void {
     const quizId: string = this.dataService.getQuizId();
     if (!this.source) {
-      console.log("CONNECT");
       this.source = new EventSource(
         `${this.backendUrl}/stream?channel=${quizId}`
       );
-      this.source.addEventListener("message", () => {
-        this.changeViewEventSource.next("Change");
+      this.source.addEventListener("message", (resp) => {
+        const data = JSON.parse(resp["data"]);
+        const quizCurrentPage = data["current_page"];
+        this.changeViewEventSource.next(quizCurrentPage);
       });
     }
-  }
-
-  changePage(): Observable<object> {
-    const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/change/${quizId}`);
   }
 
   // Quiz
@@ -60,15 +56,12 @@ export class BackendService {
     return this.http.put(`${this.backendUrl}/quiz/${quizId}`, body);
   }
 
-  changeRoundAndProceed(roundNum: number): Observable<object> {
-    return concat(this.updateRoundNumber(roundNum), this.changePage());
-  }
-
-  updateRoundNumber(roundNum: number): Observable<object> {
+  updateQuiz(currentPage: string, currentRound: number): Observable<object> {
+    const body = { current_page: currentPage };
+    if (currentRound !== null) {
+      body["current_round"] = currentRound;
+    }
     const quizId: string = this.dataService.getQuizId();
-    const body = {
-      current_round: roundNum,
-    };
     return this.http.put(`${this.backendUrl}/quiz/${quizId}`, body);
   }
 
@@ -142,7 +135,7 @@ export class BackendService {
       .put(`${this.backendUrl}/participants/${quizId}`, body)
       .pipe(
         switchMap((resp) => {
-          return this.changePage();
+          return this.updateQuiz("leaderboard", null);
         })
       );
   }

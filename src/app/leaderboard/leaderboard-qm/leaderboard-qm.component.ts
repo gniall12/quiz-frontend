@@ -27,9 +27,9 @@ export class LeaderboardQmComponent extends LeaderboardComponent
   onProceed() {
     this.disableSubmit = true;
     this.backendService
-      .changeRoundAndProceed(this.quiz["current_round"] + 1)
-      .subscribe(() => {
-        this.router.navigate(["quizmaster/answer-questions"]);
+      .updateQuiz("answer-questions", this.quiz["current_round"] + 1)
+      .subscribe((resp) => {
+        this.router.navigate([`quizmaster/${resp["current_page"]}`]);
       });
   }
 }

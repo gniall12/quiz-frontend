@@ -28,8 +28,8 @@ export class SummaryQmComponent extends SummaryComponent implements OnInit {
 
   onStartQuiz() {
     this.disableSubmit = true;
-    this.backendService.changeRoundAndProceed(0).subscribe((resp) => {
-      this.router.navigate(["quizmaster/answer-questions"]);
+    this.backendService.updateQuiz("answer-questions", 0).subscribe((resp) => {
+      this.router.navigate([`quizmaster/${resp["current_page"]}`]);
     });
   }
 
