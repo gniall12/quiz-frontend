@@ -6,15 +6,15 @@
   <p
     [ngClass]="{
       'participant-name': true,
-      'participant-name-selected': participant['selected']
+      'participant-name-selected': participant.selected
     }"
     (click)="onGetAnswers(participant, i)"
   >
-    {{ participant["name"] }}
+    {{ participant.name }}
   </p>
 
-  <div *ngIf="participant['selected']">
-    <div *ngFor="let answer of participant['answers']; index as i">
+  <div *ngIf="participant.selected">
+    <div *ngFor="let answer of participant.answers; index as i">
       <p class="question-title">Question {{ i + 1 }}</p>
       <p class="plain-text question-text mb-0">{{ answer["question"] }}</p>
       <div class="answer-wrapper">

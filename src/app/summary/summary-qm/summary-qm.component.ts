@@ -3,6 +3,7 @@ import { BackendService } from "../../backend.service";
 import { Router } from "@angular/router";
 import { SummaryComponent } from "../summary/summary.component";
 import { environment } from "src/environments/environment";
+import { Participant } from "src/app/interfaces/participant";
 
 @Component({
   selector: "app-summary-qm",
@@ -37,7 +38,7 @@ export class SummaryQmComponent extends SummaryComponent implements OnInit {
     return `${this.baseUrl}?quiz-id=${this.quiz["id"]}`;
   }
 
-  onRemoveParticipant(participant) {
+  onRemoveParticipant(participant: Participant) {
     this.backendService.deleteParticipant(participant).subscribe((res) => {
       console.log(res);
     });

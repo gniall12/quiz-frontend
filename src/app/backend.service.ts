@@ -5,6 +5,7 @@ import { Subject, forkJoin, concat, Observable } from "rxjs";
 import { DataService } from "./data.service";
 import { environment } from "./../environments/environment";
 import { Quiz } from "./interfaces/quiz";
+import { Participant } from "./interfaces/participant";
 
 @Injectable({
   providedIn: "root",
@@ -108,17 +109,17 @@ export class BackendService {
 
   // Participants
 
-  addParticipant(participantName: string): Observable<object> {
+  addParticipant(participantName: string): Observable<Participant> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       quiz_id: quizId,
       name: participantName,
     };
-    return this.http.post(`${this.backendUrl}/participant`, body);
+    return this.http.post<Participant>(`${this.backendUrl}/participant`, body);
   }
 
-  deleteParticipant(participant: object) {
-    const id = participant["id"];
+  deleteParticipant(participant: Participant) {
+    const id = participant.id;
     return this.http.delete(`${this.backendUrl}/participant/${id}`);
   }
 
@@ -127,7 +128,7 @@ export class BackendService {
     return this.http.get(`${this.backendUrl}/participants/${quizId}`);
   }
 
-  setParticipantScores(participants: Array<object>): Observable<object> {
+  setParticipantScores(participants: Array<Participant>): Observable<object> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       participants: participants,
@@ -135,7 +136,7 @@ export class BackendService {
     return this.http
       .put(`${this.backendUrl}/participants/${quizId}`, body)
       .pipe(
-        switchMap((resp) => {
+        switchMap(() => {
           return this.updateQuiz("leaderboard", null);
         })
       );
@@ -156,7 +157,7 @@ export class BackendService {
     return this.http.post(`${this.backendUrl}/answers`, body);
   }
 
-  getAnswers(participantId: string, roundNum: number): Observable<object> {
+  getAnswers(participantId: number, roundNum: number): Observable<object> {
     const quizId: string = this.dataService.getQuizId();
     return this.http.get(
       `${this.backendUrl}/answers/${quizId}/${roundNum}/${participantId}`

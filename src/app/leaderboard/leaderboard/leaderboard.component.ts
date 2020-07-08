@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
 import { Quiz } from "src/app/interfaces/quiz";
+import { Participant } from "src/app/interfaces/participant";
 
 @Component({
   selector: "app-leaderboard",
@@ -9,7 +10,7 @@ import { Quiz } from "src/app/interfaces/quiz";
   styleUrls: ["./leaderboard.component.css"],
 })
 export class LeaderboardComponent implements OnInit {
-  participants: Array<object>;
+  participants: Array<Participant>;
   quiz: Quiz;
   finalRound: boolean;
 

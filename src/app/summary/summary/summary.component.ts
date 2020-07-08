@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { interval, Subscription, Observable, of } from "rxjs";
 import { startWith, mergeMap, catchError } from "rxjs/operators";
 import { Quiz } from "src/app/interfaces/quiz";
+import { Participant } from "src/app/interfaces/participant";
 
 @Component({
   selector: "app-summary",
@@ -15,7 +16,7 @@ export class SummaryComponent implements OnInit, OnDestroy {
   numRounds: number;
   numQuestions: number;
   participantSubscription: Subscription;
-  participants: Array<object>;
+  participants: Array<Participant>;
   participantObs: Observable<object>;
 
   constructor(

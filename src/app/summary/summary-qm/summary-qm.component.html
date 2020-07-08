@@ -23,7 +23,7 @@
       No participants yet
     </p>
     <div *ngFor="let participant of participants">
-      <p class="participant-name">{{ participant["name"] }}</p>
+      <p class="participant-name">{{ participant.name }}</p>
       <button
         (click)="onRemoveParticipant(participant)"
         id="remove-participant-btn"

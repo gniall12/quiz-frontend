@@ -4,6 +4,7 @@ import { BackendService } from "../backend.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DataService } from "../data.service";
 import { Quiz } from "../interfaces/quiz";
+import { Participant } from "../interfaces/participant";
 
 @Component({
   selector: "app-home",
@@ -70,8 +71,8 @@ export class HomeComponent implements OnInit {
     const quizId: string = this.joinFormdata.controls["quizCode"].value;
     this.dataService.setQuizId(quizId);
     this.backendService.addParticipant(participantName).subscribe(
-      (resp) => {
-        this.dataService.setParticipantId(resp["id"]);
+      (participant: Participant) => {
+        this.dataService.setParticipantId(participant.id.toString());
         this.router.navigate(["participant/summary"]);
       },
       (error) => {

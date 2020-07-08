@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { BackendService } from "../../backend.service";
 import { Router } from "@angular/router";
 import { Quiz } from "src/app/interfaces/quiz";
+import { Participant } from "src/app/interfaces/participant";
 
 @Component({
   selector: "app-correct-qm",
@@ -10,7 +11,7 @@ import { Quiz } from "src/app/interfaces/quiz";
 })
 export class CorrectQmComponent implements OnInit {
   quiz: Quiz;
-  participants: Array<object>;
+  participants: Array<Participant>;
   participantAnswers: Array<object>;
   disableSubmit: boolean;
   uncorrected: boolean;
@@ -29,18 +30,18 @@ export class CorrectQmComponent implements OnInit {
     this.uncorrected = false;
   }
 
-  onGetAnswers(participant, index) {
-    if (participant["selected"]) {
-      participant["selected"] = false;
+  onGetAnswers(participant: Participant, index: number) {
+    if (participant.selected) {
+      participant.selected = false;
       return;
     }
-    participant["selected"] = true;
-    if (!participant["answers"]) {
+    participant.selected = true;
+    if (!participant.answers) {
       this.backendService
-        .getAnswers(participant["id"], this.quiz.current_round)
+        .getAnswers(participant.id, this.quiz.current_round)
         .subscribe((resp) => {
           console.log(resp);
-          this.participants[index]["answers"] = resp["answers"];
+          this.participants[index].answers = resp["answers"];
         });
     }
   }
@@ -60,12 +61,12 @@ export class CorrectQmComponent implements OnInit {
       this.uncorrected = true;
     } else {
       this.disableSubmit = true;
-      this.participants.forEach(function (participant: Array<object>) {
+      this.participants.forEach(function (participant: Participant) {
         let numCorrect = 0;
-        participant["answers"].forEach(function (answer) {
+        participant.answers.forEach(function (answer) {
           if (answer["correct"] === 1) numCorrect += 1;
         });
-        participant["score"] = participant["score"] + numCorrect;
+        participant.score = participant.score + numCorrect;
       });
 
       this.backendService
@@ -78,10 +79,10 @@ export class CorrectQmComponent implements OnInit {
 
   checkAllAnswersCorrected(): boolean {
     for (const participant of this.participants) {
-      if (typeof participant["answers"] === "undefined") {
+      if (typeof participant.answers === "undefined") {
         return false;
       }
-      for (const answer of participant["answers"]) {
+      for (const answer of participant.answers) {
         if (typeof answer["correct"] === "undefined") {
           return false;
         }
