@@ -12,10 +12,10 @@
       class="question-container"
     >
       <p class="question-title">Question {{ i + 1 }}</p>
-      <p class="plain-text question-text">{{ question["question"] }}</p>
+      <p class="plain-text question-text">{{ question.question }}</p>
       <input
         class="form-control"
-        [formControlName]="question['question']"
+        [formControlName]="question.question"
         placeholder="Enter answer here"
       />
     </div>

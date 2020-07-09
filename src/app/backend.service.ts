@@ -6,6 +6,7 @@ import { DataService } from "./data.service";
 import { environment } from "./../environments/environment";
 import { Quiz } from "./interfaces/quiz";
 import { Participant } from "./interfaces/participant";
+import { Question } from "./interfaces/question";
 
 @Injectable({
   providedIn: "root",

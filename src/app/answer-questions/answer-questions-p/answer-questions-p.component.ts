@@ -29,7 +29,7 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     super.loadQuestions().subscribe(() => {
       this.questions.forEach((question) => {
         this.answersFormData.addControl(
-          question["question"],
+          question.question,
           new FormControl("", [Validators.required])
         );
       });

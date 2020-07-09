@@ -5,6 +5,7 @@ import { interval, Subscription, Observable, of } from "rxjs";
 import { startWith, mergeMap, catchError } from "rxjs/operators";
 import { Quiz } from "src/app/interfaces/quiz";
 import { Participant } from "src/app/interfaces/participant";
+import { Question } from "src/app/interfaces/question";
 
 @Component({
   selector: "app-summary",
@@ -47,11 +48,11 @@ export class SummaryComponent implements OnInit, OnDestroy {
 
   public loadRounds() {
     this.backendService.getAllQuestions().subscribe((resp) => {
-      const questions = resp["questions"];
+      const questions: Array<Question> = resp["questions"];
       this.numQuestions = questions.length;
       const roundSet = new Set([]);
-      questions.forEach((question: object) => {
-        roundSet.add(question["round_number"]);
+      questions.forEach((question: Question) => {
+        roundSet.add(question.round_number);
       });
       this.numRounds = roundSet.size;
     });
