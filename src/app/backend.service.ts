@@ -7,6 +7,7 @@ import { environment } from "./../environments/environment";
 import { Quiz } from "./interfaces/quiz";
 import { Participant, ParticipantsResponse } from "./interfaces/participant";
 import { Answer, AnswersResponse } from "./interfaces/answer";
+import { QuestionsResponse } from "./interfaces/question";
 
 @Injectable({
   providedIn: "root",
@@ -70,22 +71,29 @@ export class BackendService {
 
   // Questions
 
-  addQuestions(questions: Array<object>): Observable<object> {
+  addQuestions(questions: Array<object>): Observable<QuestionsResponse> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       questions: questions,
     };
-    return this.http.post(`${this.backendUrl}/questions/${quizId}`, body);
+    return this.http.post<QuestionsResponse>(
+      `${this.backendUrl}/questions/${quizId}`,
+      body
+    );
   }
 
-  getAllQuestions(): Observable<object> {
+  getAllQuestions(): Observable<QuestionsResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/questions/${quizId}`);
+    return this.http.get<QuestionsResponse>(
+      `${this.backendUrl}/questions/${quizId}`
+    );
   }
 
-  getRoundQuestions(roundNum: number): Observable<object> {
+  getRoundQuestions(roundNum: number): Observable<QuestionsResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/questions/${quizId}/${roundNum}`);
+    return this.http.get<QuestionsResponse>(
+      `${this.backendUrl}/questions/${quizId}/${roundNum}`
+    );
   }
 
   getQuizAndRoundQuestions(): Observable<object> {
@@ -93,7 +101,7 @@ export class BackendService {
       switchMap((quiz) => {
         const roundNum = quiz.current_round;
         return this.getRoundQuestions(roundNum).pipe(
-          map((resp2) => {
+          map((resp2: QuestionsResponse) => {
             return { quiz: quiz, questions: resp2 };
           })
         );
@@ -104,7 +112,7 @@ export class BackendService {
   addRounds(
     questions: Array<object>,
     numRounds: number
-  ): Observable<[object, object]> {
+  ): Observable<[QuestionsResponse, object]> {
     return forkJoin(this.addQuestions(questions), this.setNumRounds(numRounds));
   }
 

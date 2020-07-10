@@ -24,7 +24,7 @@ export class AnswerQuestionsComponent implements OnInit {
   loadQuestions() {
     return this.backendService.getQuizAndRoundQuestions().pipe(
       map((resp) => {
-        this.questions = resp["questions"]["questions"];
+        this.questions = resp["questions"].questions;
         this.quiz = resp["quiz"];
       })
     );

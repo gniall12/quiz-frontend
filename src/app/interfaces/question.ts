@@ -4,3 +4,7 @@ export interface Question {
   round_number: number;
   question: string;
 }
+
+export interface QuestionsResponse {
+  questions: Array<Question>;
+}

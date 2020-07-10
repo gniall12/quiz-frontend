@@ -8,7 +8,7 @@ import {
   Participant,
   ParticipantsResponse,
 } from "src/app/interfaces/participant";
-import { Question } from "src/app/interfaces/question";
+import { Question, QuestionsResponse } from "src/app/interfaces/question";
 
 @Component({
   selector: "app-summary",
@@ -52,15 +52,17 @@ export class SummaryComponent implements OnInit, OnDestroy {
   }
 
   public loadRounds() {
-    this.backendService.getAllQuestions().subscribe((resp) => {
-      const questions: Array<Question> = resp["questions"];
-      this.numQuestions = questions.length;
-      const roundSet = new Set([]);
-      questions.forEach((question: Question) => {
-        roundSet.add(question.round_number);
+    this.backendService
+      .getAllQuestions()
+      .subscribe((questionsResp: QuestionsResponse) => {
+        const questions: Array<Question> = questionsResp.questions;
+        this.numQuestions = questions.length;
+        const roundSet = new Set([]);
+        questions.forEach((question: Question) => {
+          roundSet.add(question.round_number);
+        });
+        this.numRounds = roundSet.size;
       });
-      this.numRounds = roundSet.size;
-    });
   }
 
   ngOnDestroy() {
