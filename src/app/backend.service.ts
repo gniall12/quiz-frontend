@@ -6,7 +6,7 @@ import { DataService } from "./data.service";
 import { environment } from "./../environments/environment";
 import { Quiz } from "./interfaces/quiz";
 import { Participant, ParticipantsResponse } from "./interfaces/participant";
-import { Answer } from "./interfaces/answer";
+import { Answer, AnswersResponse } from "./interfaces/answer";
 
 @Injectable({
   providedIn: "root",
@@ -154,9 +154,12 @@ export class BackendService {
     return this.http.post(`${this.backendUrl}/answers`, body);
   }
 
-  getAnswers(participantId: number, roundNum: number): Observable<Answer> {
+  getAnswers(
+    participantId: number,
+    roundNum: number
+  ): Observable<AnswersResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get<Answer>(
+    return this.http.get<AnswersResponse>(
       `${this.backendUrl}/answers/${quizId}/${roundNum}/${participantId}`
     );
   }

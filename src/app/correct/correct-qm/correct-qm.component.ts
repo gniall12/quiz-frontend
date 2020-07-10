@@ -6,7 +6,7 @@ import {
   Participant,
   ParticipantsResponse,
 } from "src/app/interfaces/participant";
-import { Answer } from "src/app/interfaces/answer";
+import { Answer, AnswersResponse } from "src/app/interfaces/answer";
 
 @Component({
   selector: "app-correct-qm",
@@ -45,8 +45,8 @@ export class CorrectQmComponent implements OnInit {
     if (!participant.answers) {
       this.backendService
         .getAnswers(participant.id, this.quiz.current_round)
-        .subscribe((resp) => {
-          this.participants[index].answers = resp["answers"];
+        .subscribe((answers: AnswersResponse) => {
+          this.participants[index].answers = answers.answers;
         });
     }
   }

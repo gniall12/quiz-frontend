@@ -8,3 +8,7 @@ export interface Answer {
   question: Question;
   correct: boolean;
 }
+
+export interface AnswersResponse {
+  answers: Array<Answer>;
+}
