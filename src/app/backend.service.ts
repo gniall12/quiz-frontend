@@ -131,7 +131,7 @@ export class BackendService {
     );
   }
 
-  setParticipantScores(participants: Array<Participant>): Observable<object> {
+  setParticipantScores(participants: Array<Participant>): Observable<Quiz> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       participants: participants,

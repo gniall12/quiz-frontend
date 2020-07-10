@@ -76,8 +76,8 @@ export class CorrectQmComponent implements OnInit {
 
       this.backendService
         .setParticipantScores(this.participants)
-        .subscribe((resp) => {
-          this.router.navigate([`quizmaster/${resp["current_page"]}`]);
+        .subscribe((quiz: Quiz) => {
+          this.router.navigate([`quizmaster/${quiz.current_page}`]);
         });
     }
   }

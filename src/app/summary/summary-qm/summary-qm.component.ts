@@ -4,6 +4,7 @@ import { Router } from "@angular/router";
 import { SummaryComponent } from "../summary/summary.component";
 import { environment } from "src/environments/environment";
 import { Participant } from "src/app/interfaces/participant";
+import { Quiz } from "src/app/interfaces/quiz";
 
 @Component({
   selector: "app-summary-qm",
@@ -29,9 +30,11 @@ export class SummaryQmComponent extends SummaryComponent implements OnInit {
 
   onStartQuiz() {
     this.disableSubmit = true;
-    this.backendService.updateQuiz("answer-questions", 0).subscribe((resp) => {
-      this.router.navigate([`quizmaster/${resp["current_page"]}`]);
-    });
+    this.backendService
+      .updateQuiz("answer-questions", 0)
+      .subscribe((quiz: Quiz) => {
+        this.router.navigate([`quizmaster/${quiz.current_page}`]);
+      });
   }
 
   getQuizLink() {
