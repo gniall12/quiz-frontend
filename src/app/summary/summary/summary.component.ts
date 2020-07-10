@@ -4,7 +4,10 @@ import { Router } from "@angular/router";
 import { interval, Subscription, Observable, of } from "rxjs";
 import { startWith, mergeMap, catchError } from "rxjs/operators";
 import { Quiz } from "src/app/interfaces/quiz";
-import { Participant } from "src/app/interfaces/participant";
+import {
+  Participant,
+  ParticipantsResponse,
+} from "src/app/interfaces/participant";
 import { Question } from "src/app/interfaces/question";
 
 @Component({
@@ -41,9 +44,11 @@ export class SummaryComponent implements OnInit, OnDestroy {
         )
       )
     );
-    this.participantSubscription = this.participantObs.subscribe((res) => {
-      this.participants = res["participants"];
-    });
+    this.participantSubscription = this.participantObs.subscribe(
+      (participants: ParticipantsResponse) => {
+        this.participants = participants.participants;
+      }
+    );
   }
 
   public loadRounds() {

@@ -5,7 +5,7 @@ import { Subject, forkJoin, concat, Observable } from "rxjs";
 import { DataService } from "./data.service";
 import { environment } from "./../environments/environment";
 import { Quiz } from "./interfaces/quiz";
-import { Participant } from "./interfaces/participant";
+import { Participant, ParticipantsResponse } from "./interfaces/participant";
 import { Answer } from "./interfaces/answer";
 
 @Injectable({
@@ -124,9 +124,11 @@ export class BackendService {
     return this.http.delete(`${this.backendUrl}/participant/${id}`);
   }
 
-  getParticipants(): Observable<object> {
+  getParticipants(): Observable<ParticipantsResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/participants/${quizId}`);
+    return this.http.get<ParticipantsResponse>(
+      `${this.backendUrl}/participants/${quizId}`
+    );
   }
 
   setParticipantScores(participants: Array<Participant>): Observable<object> {

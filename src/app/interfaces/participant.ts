@@ -8,3 +8,7 @@ export interface Participant {
   selected: boolean;
   answers: Array<Answer>;
 }
+
+export interface ParticipantsResponse {
+  participants: Array<Participant>;
+}

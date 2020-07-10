@@ -2,7 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { BackendService } from "../../backend.service";
 import { Router } from "@angular/router";
 import { Quiz } from "src/app/interfaces/quiz";
-import { Participant } from "src/app/interfaces/participant";
+import {
+  Participant,
+  ParticipantsResponse,
+} from "src/app/interfaces/participant";
 import { Answer } from "src/app/interfaces/answer";
 
 @Component({
@@ -20,9 +23,11 @@ export class CorrectQmComponent implements OnInit {
   constructor(private backendService: BackendService, private router: Router) {}
 
   ngOnInit() {
-    this.backendService.getParticipants().subscribe((resp) => {
-      this.participants = resp["participants"];
-    });
+    this.backendService
+      .getParticipants()
+      .subscribe((participants: ParticipantsResponse) => {
+        this.participants = participants.participants;
+      });
     this.backendService.getQuiz().subscribe((resp: Quiz) => {
       this.quiz = resp;
     });

@@ -2,7 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { BackendService } from "src/app/backend.service";
 import { Router } from "@angular/router";
 import { Quiz } from "src/app/interfaces/quiz";
-import { Participant } from "src/app/interfaces/participant";
+import {
+  Participant,
+  ParticipantsResponse,
+} from "src/app/interfaces/participant";
 
 @Component({
   selector: "app-leaderboard",
@@ -20,11 +23,13 @@ export class LeaderboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.backendService.getParticipants().subscribe((resp) => {
-      this.participants = resp["participants"].sort((p1: object, p2: object) =>
-        p1["score"] > p2["score"] ? -1 : 1
-      );
-    });
+    this.backendService
+      .getParticipants()
+      .subscribe((participants: ParticipantsResponse) => {
+        this.participants = participants.participants.sort(
+          (p1: object, p2: object) => (p1["score"] > p2["score"] ? -1 : 1)
+        );
+      });
     this.backendService.getQuiz().subscribe((quiz: Quiz) => {
       this.quiz = quiz;
       this.finalRound = this.quiz.current_round === this.quiz.number_rounds - 1;
