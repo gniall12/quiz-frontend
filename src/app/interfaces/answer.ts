@@ -6,4 +6,5 @@ export interface Answer {
   participant_id: number;
   answer: string;
   question: Question;
+  correct: boolean;
 }

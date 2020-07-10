@@ -4,6 +4,9 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
 import { AnswerQuestionsComponent } from "../answer-questions/answer-questions.component";
+import { Answer } from "src/app/interfaces/answer";
+import { Question } from "src/app/interfaces/question";
+import { DataService } from "src/app/data.service";
 declare var $: any;
 
 @Component({
@@ -17,24 +20,22 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
   subscription: Subscription;
   submitted: boolean;
   disableSubmit: boolean;
+  answers: Array<Answer>;
 
   constructor(
     protected backendService: BackendService,
-    protected router: Router
+    protected router: Router,
+    protected dataService: DataService
   ) {
     super(backendService, router);
   }
 
   ngOnInit() {
-    super.loadQuestions().subscribe(() => {
-      this.questions.forEach((question) => {
-        this.answersFormData.addControl(
-          question.question,
-          new FormControl("", [Validators.required])
-        );
-      });
-    });
+    this.answers = [];
     this.answersFormData = new FormGroup({});
+    super.loadQuestions().subscribe(() => {
+      this.createAnswersAndForm();
+    });
     this.backendService.connectToChangeNotifications();
     // Complicated block - find alternative method
     this.subscription = this.backendService.changeViewEvent$.subscribe(
@@ -56,6 +57,25 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     this.submitted = false;
   }
 
+  createAnswersAndForm() {
+    this.questions.forEach((question: Question) => {
+      const answer: Answer = {
+        id: null,
+        question_id: question.id,
+        participant_id: +this.dataService.getParticipantId(),
+        answer: null,
+        question: question,
+        correct: null,
+      };
+      this.answers.push(answer);
+
+      this.answersFormData.addControl(
+        answer.question.question,
+        new FormControl("", [Validators.required])
+      );
+    });
+  }
+
   onClickSubmit(confirmedSubmit: boolean) {
     if (!confirmedSubmit && this.answersFormData.invalid) {
       $("#confirmSubmitModal").modal("show");
@@ -67,11 +87,11 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
   }
 
   submitAnswers(): Observable<object> {
-    this.questions.forEach((question) => {
-      question["answer"] = this.answersFormData.value[question["question"]];
+    this.answers.forEach((answer: Answer) => {
+      answer.answer = this.answersFormData.value[answer.question.question];
     });
     this.disableSubmit = true;
-    return this.backendService.submitAnswers(this.questions);
+    return this.backendService.submitAnswers(this.answers);
   }
 
   ngOnDestroy() {

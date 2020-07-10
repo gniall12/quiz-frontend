@@ -3,6 +3,7 @@ import { BackendService } from "../../backend.service";
 import { Router } from "@angular/router";
 import { Quiz } from "src/app/interfaces/quiz";
 import { Participant } from "src/app/interfaces/participant";
+import { Answer } from "src/app/interfaces/answer";
 
 @Component({
   selector: "app-correct-qm",
@@ -40,20 +41,19 @@ export class CorrectQmComponent implements OnInit {
       this.backendService
         .getAnswers(participant.id, this.quiz.current_round)
         .subscribe((resp) => {
-          console.log(resp);
           this.participants[index].answers = resp["answers"];
         });
     }
   }
 
-  onCorrect(answer: object) {
+  onCorrect(answer: Answer) {
     this.uncorrected = false;
-    answer["correct"] = 1;
+    answer.correct = true;
   }
 
-  onIncorrect(answer: object) {
+  onIncorrect(answer: Answer) {
     this.uncorrected = false;
-    answer["correct"] = -1;
+    answer.correct = false;
   }
 
   onProceed() {
@@ -64,7 +64,7 @@ export class CorrectQmComponent implements OnInit {
       this.participants.forEach(function (participant: Participant) {
         let numCorrect = 0;
         participant.answers.forEach(function (answer) {
-          if (answer["correct"] === 1) numCorrect += 1;
+          if (answer.correct) numCorrect += 1;
         });
         participant.score = participant.score + numCorrect;
       });
@@ -83,7 +83,10 @@ export class CorrectQmComponent implements OnInit {
         return false;
       }
       for (const answer of participant.answers) {
-        if (typeof answer["correct"] === "undefined") {
+        if (
+          typeof answer["correct"] === "undefined" ||
+          answer.correct === null
+        ) {
           return false;
         }
       }

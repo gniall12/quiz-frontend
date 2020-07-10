@@ -7,15 +7,12 @@
   (ngSubmit)="onClickSubmit(false)"
 >
   <div class="form-group">
-    <div
-      *ngFor="let question of questions; index as i"
-      class="question-container"
-    >
+    <div *ngFor="let answer of answers; index as i" class="question-container">
       <p class="question-title">Question {{ i + 1 }}</p>
-      <p class="plain-text question-text">{{ question.question }}</p>
+      <p class="plain-text question-text">{{ answer.question.question }}</p>
       <input
         class="form-control"
-        [formControlName]="question.question"
+        [formControlName]="answer.question.question"
         placeholder="Enter answer here"
       />
     </div>
