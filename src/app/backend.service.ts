@@ -112,7 +112,7 @@ export class BackendService {
   addRounds(
     questions: Array<object>,
     numRounds: number
-  ): Observable<[QuestionsResponse, object]> {
+  ): Observable<[QuestionsResponse, Quiz]> {
     return forkJoin(this.addQuestions(questions), this.setNumRounds(numRounds));
   }
 
@@ -155,11 +155,11 @@ export class BackendService {
 
   // Answers
 
-  submitAnswers(answers: Array<Answer>): Observable<object> {
+  submitAnswers(answers: Array<Answer>): Observable<AnswersResponse> {
     const body = {
       answers: answers,
     };
-    return this.http.post(`${this.backendUrl}/answers`, body);
+    return this.http.post<AnswersResponse>(`${this.backendUrl}/answers`, body);
   }
 
   getAnswers(

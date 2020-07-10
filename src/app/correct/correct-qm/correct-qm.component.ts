@@ -16,7 +16,7 @@ import { Answer, AnswersResponse } from "src/app/interfaces/answer";
 export class CorrectQmComponent implements OnInit {
   quiz: Quiz;
   participants: Array<Participant>;
-  participantAnswers: Array<object>;
+  participantAnswers: Array<Answer>;
   disableSubmit: boolean;
   uncorrected: boolean;
 

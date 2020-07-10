@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription, Observable } from "rxjs";
 import { AnswerQuestionsComponent } from "../answer-questions/answer-questions.component";
-import { Answer } from "src/app/interfaces/answer";
+import { Answer, AnswersResponse } from "src/app/interfaces/answer";
 import { Question } from "src/app/interfaces/question";
 import { DataService } from "src/app/data.service";
 declare var $: any;
@@ -80,13 +80,13 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
     if (!confirmedSubmit && this.answersFormData.invalid) {
       $("#confirmSubmitModal").modal("show");
     } else {
-      this.submitAnswers().subscribe((resp) => {
+      this.submitAnswers().subscribe(() => {
         this.submitted = true;
       });
     }
   }
 
-  submitAnswers(): Observable<object> {
+  submitAnswers(): Observable<AnswersResponse> {
     this.answers.forEach((answer: Answer) => {
       answer.answer = this.answersFormData.value[answer.question.question];
     });

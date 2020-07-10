@@ -27,7 +27,7 @@ export class LeaderboardComponent implements OnInit {
       .getParticipants()
       .subscribe((participants: ParticipantsResponse) => {
         this.participants = participants.participants.sort(
-          (p1: object, p2: object) => (p1["score"] > p2["score"] ? -1 : 1)
+          (p1: Participant, p2: Participant) => (p1.score > p2.score ? -1 : 1)
         );
       });
     this.backendService.getQuiz().subscribe((quiz: Quiz) => {
