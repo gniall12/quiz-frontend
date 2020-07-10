@@ -45,7 +45,7 @@ export class SummaryPComponent extends SummaryComponent implements OnInit {
     }
     const participantId = this.dataService.getParticipantId();
     for (const participant of this.participants) {
-      if (participant["id"].toString() === participantId) {
+      if (participant.id.toString() === participantId) {
         this.participantRemoved = false;
         return;
       }

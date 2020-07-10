@@ -1,4 +1,4 @@
-<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
+<h3 *ngIf="quiz">{{ quiz.name }}</h3>
 <h5><span *ngIf="finalRound">Final </span>Leaderboard</h5>
 
 <table class="table" *ngIf="participants">
@@ -9,8 +9,8 @@
   </tr>
   <tr *ngFor="let participant of participants; index as i">
     <td class="plain-text pl-0">{{ i + 1 }}</td>
-    <td class="plain-text pl-0">{{ participant["name"] }}</td>
-    <td class="plain-text pl-0">{{ participant["score"] }}</td>
+    <td class="plain-text pl-0">{{ participant.name }}</td>
+    <td class="plain-text pl-0">{{ participant.score }}</td>
   </tr>
 </table>
 

@@ -4,6 +4,10 @@ import { switchMap, map } from "rxjs/operators";
 import { Subject, forkJoin, concat, Observable } from "rxjs";
 import { DataService } from "./data.service";
 import { environment } from "./../environments/environment";
+import { Quiz } from "./interfaces/quiz";
+import { Participant, ParticipantsResponse } from "./interfaces/participant";
+import { Answer, AnswersResponse } from "./interfaces/answer";
+import { QuestionsResponse } from "./interfaces/question";
 
 @Injectable({
   providedIn: "root",
@@ -36,62 +40,69 @@ export class BackendService {
 
   // Quiz
 
-  createQuiz(quizName: string): Observable<object> {
+  createQuiz(quizName: string): Observable<Quiz> {
     const body = {
       name: quizName,
     };
-    return this.http.post(`${this.backendUrl}/quiz`, body);
+    return this.http.post<Quiz>(`${this.backendUrl}/quiz`, body);
   }
 
-  getQuiz(): Observable<object> {
+  getQuiz(): Observable<Quiz> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/quiz/${quizId}`);
+    return this.http.get<Quiz>(`${this.backendUrl}/quiz/${quizId}`);
   }
 
-  setNumRounds(numRounds: number): Observable<object> {
+  setNumRounds(numRounds: number): Observable<Quiz> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       number_rounds: numRounds,
     };
-    return this.http.put(`${this.backendUrl}/quiz/${quizId}`, body);
+    return this.http.put<Quiz>(`${this.backendUrl}/quiz/${quizId}`, body);
   }
 
-  updateQuiz(currentPage: string, currentRound: number): Observable<object> {
+  updateQuiz(currentPage: string, currentRound: number): Observable<Quiz> {
     const body = { current_page: currentPage };
     if (currentRound !== null) {
       body["current_round"] = currentRound;
     }
     const quizId: string = this.dataService.getQuizId();
-    return this.http.put(`${this.backendUrl}/quiz/${quizId}`, body);
+    return this.http.put<Quiz>(`${this.backendUrl}/quiz/${quizId}`, body);
   }
 
   // Questions
 
-  addQuestions(questions: Array<object>): Observable<object> {
+  addQuestions(questions: Array<object>): Observable<QuestionsResponse> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       questions: questions,
     };
-    return this.http.post(`${this.backendUrl}/questions/${quizId}`, body);
+    return this.http.post<QuestionsResponse>(
+      `${this.backendUrl}/questions/${quizId}`,
+      body
+    );
   }
 
-  getAllQuestions(): Observable<object> {
+  getAllQuestions(): Observable<QuestionsResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/questions/${quizId}`);
+    return this.http.get<QuestionsResponse>(
+      `${this.backendUrl}/questions/${quizId}`
+    );
   }
 
-  getRoundQuestions(roundNum: number): Observable<object> {
+  getRoundQuestions(roundNum: number): Observable<QuestionsResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/questions/${quizId}/${roundNum}`);
+    return this.http.get<QuestionsResponse>(
+      `${this.backendUrl}/questions/${quizId}/${roundNum}`
+    );
   }
 
   getQuizAndRoundQuestions(): Observable<object> {
     return this.getQuiz().pipe(
-      switchMap((resp) => {
-        const roundNum = resp["current_round"];
+      switchMap((quiz) => {
+        const roundNum = quiz.current_round;
         return this.getRoundQuestions(roundNum).pipe(
-          map((resp2) => {
-            return { quiz: resp, questions: resp2 };
+          map((resp2: QuestionsResponse) => {
+            return { quiz: quiz, questions: resp2 };
           })
         );
       })
@@ -101,32 +112,34 @@ export class BackendService {
   addRounds(
     questions: Array<object>,
     numRounds: number
-  ): Observable<[object, object]> {
+  ): Observable<[QuestionsResponse, Quiz]> {
     return forkJoin(this.addQuestions(questions), this.setNumRounds(numRounds));
   }
 
   // Participants
 
-  addParticipant(participantName: string): Observable<object> {
+  addParticipant(participantName: string): Observable<Participant> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       quiz_id: quizId,
       name: participantName,
     };
-    return this.http.post(`${this.backendUrl}/participant`, body);
+    return this.http.post<Participant>(`${this.backendUrl}/participant`, body);
   }
 
-  deleteParticipant(participant: object) {
-    const id = participant["id"];
+  deleteParticipant(participant: Participant) {
+    const id = participant.id;
     return this.http.delete(`${this.backendUrl}/participant/${id}`);
   }
 
-  getParticipants(): Observable<object> {
+  getParticipants(): Observable<ParticipantsResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(`${this.backendUrl}/participants/${quizId}`);
+    return this.http.get<ParticipantsResponse>(
+      `${this.backendUrl}/participants/${quizId}`
+    );
   }
 
-  setParticipantScores(participants: Array<object>): Observable<object> {
+  setParticipantScores(participants: Array<Participant>): Observable<Quiz> {
     const quizId: string = this.dataService.getQuizId();
     const body = {
       participants: participants,
@@ -134,7 +147,7 @@ export class BackendService {
     return this.http
       .put(`${this.backendUrl}/participants/${quizId}`, body)
       .pipe(
-        switchMap((resp) => {
+        switchMap(() => {
           return this.updateQuiz("leaderboard", null);
         })
       );
@@ -142,22 +155,19 @@ export class BackendService {
 
   // Answers
 
-  submitAnswers(questions: Array<object>): Observable<object> {
-    const participantId = this.dataService.getParticipantId();
-    questions.forEach((question) => {
-      question["question_id"] = question["id"];
-      question["participant_id"] = participantId;
-    });
+  submitAnswers(answers: Array<Answer>): Observable<AnswersResponse> {
     const body = {
-      answers: questions,
+      answers: answers,
     };
-    console.log(body);
-    return this.http.post(`${this.backendUrl}/answers`, body);
+    return this.http.post<AnswersResponse>(`${this.backendUrl}/answers`, body);
   }
 
-  getAnswers(participantId: string, roundNum: number): Observable<object> {
+  getAnswers(
+    participantId: number,
+    roundNum: number
+  ): Observable<AnswersResponse> {
     const quizId: string = this.dataService.getQuizId();
-    return this.http.get(
+    return this.http.get<AnswersResponse>(
       `${this.backendUrl}/answers/${quizId}/${roundNum}/${participantId}`
     );
   }

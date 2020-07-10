@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { BackendService } from "../backend.service";
 import { FormControl, FormArray } from "@angular/forms";
 import { Router } from "@angular/router";
+import { Quiz } from "../interfaces/quiz";
 
 @Component({
   selector: "app-create-quiz",
@@ -24,8 +25,8 @@ export class CreateQuizComponent implements OnInit {
   }
 
   public getQuizName() {
-    return this.backendService.getQuiz().subscribe((res) => {
-      this.quizName = res["name"];
+    return this.backendService.getQuiz().subscribe((quiz: Quiz) => {
+      this.quizName = quiz.name;
     });
   }
 

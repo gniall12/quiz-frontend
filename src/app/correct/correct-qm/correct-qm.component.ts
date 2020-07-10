@@ -1,6 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { BackendService } from "../../backend.service";
 import { Router } from "@angular/router";
+import { Quiz } from "src/app/interfaces/quiz";
+import {
+  Participant,
+  ParticipantsResponse,
+} from "src/app/interfaces/participant";
+import { Answer, AnswersResponse } from "src/app/interfaces/answer";
 
 @Component({
   selector: "app-correct-qm",
@@ -8,19 +14,21 @@ import { Router } from "@angular/router";
   styleUrls: ["./correct-qm.component.css"],
 })
 export class CorrectQmComponent implements OnInit {
-  quiz: object;
-  participants: Array<object>;
-  participantAnswers: Array<object>;
+  quiz: Quiz;
+  participants: Array<Participant>;
+  participantAnswers: Array<Answer>;
   disableSubmit: boolean;
   uncorrected: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
 
   ngOnInit() {
-    this.backendService.getParticipants().subscribe((resp) => {
-      this.participants = resp["participants"];
-    });
-    this.backendService.getQuiz().subscribe((resp) => {
+    this.backendService
+      .getParticipants()
+      .subscribe((participantsResp: ParticipantsResponse) => {
+        this.participants = participantsResp.participants;
+      });
+    this.backendService.getQuiz().subscribe((resp: Quiz) => {
       this.quiz = resp;
     });
     this.participantAnswers = [];
@@ -28,30 +36,29 @@ export class CorrectQmComponent implements OnInit {
     this.uncorrected = false;
   }
 
-  onGetAnswers(participant, index) {
-    if (participant["selected"]) {
-      participant["selected"] = false;
+  onGetAnswers(participant: Participant, index: number) {
+    if (participant.selected) {
+      participant.selected = false;
       return;
     }
-    participant["selected"] = true;
-    if (!participant["answers"]) {
+    participant.selected = true;
+    if (!participant.answers) {
       this.backendService
-        .getAnswers(participant["id"], this.quiz["current_round"])
-        .subscribe((resp) => {
-          console.log(resp);
-          this.participants[index]["answers"] = resp["answers"];
+        .getAnswers(participant.id, this.quiz.current_round)
+        .subscribe((answersResp: AnswersResponse) => {
+          this.participants[index].answers = answersResp.answers;
         });
     }
   }
 
-  onCorrect(answer: object) {
+  onCorrect(answer: Answer) {
     this.uncorrected = false;
-    answer["correct"] = 1;
+    answer.correct = true;
   }
 
-  onIncorrect(answer: object) {
+  onIncorrect(answer: Answer) {
     this.uncorrected = false;
-    answer["correct"] = -1;
+    answer.correct = false;
   }
 
   onProceed() {
@@ -59,29 +66,32 @@ export class CorrectQmComponent implements OnInit {
       this.uncorrected = true;
     } else {
       this.disableSubmit = true;
-      this.participants.forEach(function (participant: Array<object>) {
+      this.participants.forEach(function (participant: Participant) {
         let numCorrect = 0;
-        participant["answers"].forEach(function (answer) {
-          if (answer["correct"] === 1) numCorrect += 1;
+        participant.answers.forEach(function (answer) {
+          if (answer.correct) numCorrect += 1;
         });
-        participant["score"] = participant["score"] + numCorrect;
+        participant.score = participant.score + numCorrect;
       });
 
       this.backendService
         .setParticipantScores(this.participants)
-        .subscribe((resp) => {
-          this.router.navigate([`quizmaster/${resp["current_page"]}`]);
+        .subscribe((quiz: Quiz) => {
+          this.router.navigate([`quizmaster/${quiz.current_page}`]);
         });
     }
   }
 
   checkAllAnswersCorrected(): boolean {
     for (const participant of this.participants) {
-      if (typeof participant["answers"] === "undefined") {
+      if (typeof participant.answers === "undefined") {
         return false;
       }
-      for (const answer of participant["answers"]) {
-        if (typeof answer["correct"] === "undefined") {
+      for (const answer of participant.answers) {
+        if (
+          typeof answer["correct"] === "undefined" ||
+          answer.correct === null
+        ) {
           return false;
         }
       }

@@ -1,32 +1,34 @@
-<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
-<h6 *ngIf="quiz">Round {{ quiz["current_round"] + 1 }}</h6>
+<h3 *ngIf="quiz">{{ quiz.name }}</h3>
+<h6 *ngIf="quiz">Round {{ quiz.current_round + 1 }}</h6>
 <p class="plain-text">Click a participant's name to get their answers</p>
 
 <div *ngFor="let participant of participants; let i = index">
   <p
     [ngClass]="{
       'participant-name': true,
-      'participant-name-selected': participant['selected']
+      'participant-name-selected': participant.selected
     }"
     (click)="onGetAnswers(participant, i)"
   >
-    {{ participant["name"] }}
+    {{ participant.name }}
   </p>
 
-  <div *ngIf="participant['selected']">
-    <div *ngFor="let answer of participant['answers']; index as i">
+  <div *ngIf="participant.selected">
+    <div *ngFor="let answer of participant.answers; index as i">
       <p class="question-title">Question {{ i + 1 }}</p>
-      <p class="plain-text question-text mb-0">{{ answer["question"] }}</p>
+      <p class="plain-text question-text mb-0">
+        {{ answer.question.question }}
+      </p>
       <div class="answer-wrapper">
         <p class="plain-text answer-text mb-0">
-          {{ answer["answer"] }}
+          {{ answer.answer }}
         </p>
         <button class="btn btn-with-icon" (click)="onCorrect(answer)">
           <img
             src="assets/tick.svg"
             alt="Correct"
             [ngStyle]="{
-              filter: answer['correct'] === 1 ? 'none' : 'grayscale(1)'
+              filter: answer.correct ? 'none' : 'grayscale(1)'
             }"
           />
         </button>
@@ -35,7 +37,7 @@
             src="assets/x.svg"
             alt="Correct"
             [ngStyle]="{
-              filter: answer['correct'] === -1 ? 'none' : 'grayscale(1)'
+              filter: answer.correct === false ? 'none' : 'grayscale(1)'
             }"
           />
         </button>

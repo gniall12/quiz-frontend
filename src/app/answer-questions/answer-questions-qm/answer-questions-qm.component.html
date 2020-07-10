@@ -1,9 +1,9 @@
-<h3 *ngIf="quiz">{{ quiz["name"] }}</h3>
-<h5 *ngIf="quiz">Round {{ quiz["current_round"] + 1 }}</h5>
+<h3 *ngIf="quiz">{{ quiz.name }}</h3>
+<h5 *ngIf="quiz">Round {{ quiz.current_round + 1 }}</h5>
 
 <div *ngFor="let question of questions; index as i">
   <p class="question-title">Question {{ i + 1 }}</p>
-  <p class="plain-text">{{ question["question"] }}</p>
+  <p class="plain-text">{{ question.question }}</p>
 </div>
 
 <br />

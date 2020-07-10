@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { BackendService } from "../backend.service";
 import { Router, ActivatedRoute, Params } from "@angular/router";
 import { DataService } from "../data.service";
+import { Quiz } from "../interfaces/quiz";
+import { Participant } from "../interfaces/participant";
 
 @Component({
   selector: "app-home",
@@ -55,9 +57,8 @@ export class HomeComponent implements OnInit {
   public onCreateQuizSubmit() {
     this.disableSubmit = true;
     const quizName: string = this.createFormdata.controls["quizName"].value;
-    this.backendService.createQuiz(quizName).subscribe((resp) => {
-      console.log(resp);
-      this.dataService.setQuizId(resp["id"]);
+    this.backendService.createQuiz(quizName).subscribe((quiz: Quiz) => {
+      this.dataService.setQuizId(quiz.id.toString());
       this.router.navigate(["create-quiz"]);
     });
   }
@@ -70,15 +71,15 @@ export class HomeComponent implements OnInit {
     const quizId: string = this.joinFormdata.controls["quizCode"].value;
     this.dataService.setQuizId(quizId);
     this.backendService.addParticipant(participantName).subscribe(
-      (resp) => {
-        this.dataService.setParticipantId(resp["id"]);
+      (participant: Participant) => {
+        this.dataService.setParticipantId(participant.id.toString());
         this.router.navigate(["participant/summary"]);
       },
       (error) => {
         this.disableSubmit = false;
         this.joinErrorMessage = error["error"]["message"];
-        if(error.status == 404)
-          this.joinErrorMessage += ". Did you enter the right code?"
+        if (error.status == 404)
+          this.joinErrorMessage += ". Did you enter the right code?";
       }
     );
   }
