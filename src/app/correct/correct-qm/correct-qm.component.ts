@@ -25,8 +25,8 @@ export class CorrectQmComponent implements OnInit {
   ngOnInit() {
     this.backendService
       .getParticipants()
-      .subscribe((participants: ParticipantsResponse) => {
-        this.participants = participants.participants;
+      .subscribe((participantsResp: ParticipantsResponse) => {
+        this.participants = participantsResp.participants;
       });
     this.backendService.getQuiz().subscribe((resp: Quiz) => {
       this.quiz = resp;
@@ -45,8 +45,8 @@ export class CorrectQmComponent implements OnInit {
     if (!participant.answers) {
       this.backendService
         .getAnswers(participant.id, this.quiz.current_round)
-        .subscribe((answers: AnswersResponse) => {
-          this.participants[index].answers = answers.answers;
+        .subscribe((answersResp: AnswersResponse) => {
+          this.participants[index].answers = answersResp.answers;
         });
     }
   }

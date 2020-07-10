@@ -45,8 +45,8 @@ export class SummaryComponent implements OnInit, OnDestroy {
       )
     );
     this.participantSubscription = this.participantObs.subscribe(
-      (participants: ParticipantsResponse) => {
-        this.participants = participants.participants;
+      (participantsResp: ParticipantsResponse) => {
+        this.participants = participantsResp.participants;
       }
     );
   }

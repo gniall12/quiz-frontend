@@ -25,8 +25,8 @@ export class LeaderboardComponent implements OnInit {
   ngOnInit() {
     this.backendService
       .getParticipants()
-      .subscribe((participants: ParticipantsResponse) => {
-        this.participants = participants.participants.sort(
+      .subscribe((participantsResp: ParticipantsResponse) => {
+        this.participants = participantsResp.participants.sort(
           (p1: Participant, p2: Participant) => (p1.score > p2.score ? -1 : 1)
         );
       });
