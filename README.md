@@ -1,27 +1,21 @@
 # Quizzer
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.6.
+[quizzer.niallg.ie](https://quizzer.niallg.ie)
 
-## Development server
+Take on your friends in a quiz game.
+
+Create a quiz with your own questions and act as quizmaster while your friends battle it out for first place.
+
+The idea for this stemmed from the lockdown-induced Zoom quizzes of March/April 2020. The app is designed to be played with the quizmaster talking to participants, and eases the hassle of collecting answers and correcting.
+
+## Details
+
+Angular frontend which connects to a [backend](https://github.com/gniall12/quiz-backend) written in Python using Flask
+
+## Running Code
+
+Set up Angular using the steps [here](https://angular.io/guide/setup-local)
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
