@@ -73,6 +73,7 @@ p {
   border-radius: 20px;
   width: 100%;
   max-width: 200px;
+  min-height: 40px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -131,4 +132,30 @@ p.secondary {
 
 .error-message {
   color: #e63946;
+}
+
+.loading-spinner {
+  display: inline-block;
+  width: 19px;
+  height: 19px;
+}
+
+.loading-spinner:after {
+  content: " ";
+  display: block;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: loading-spinnerÏ 1.2s linear infinite;
+}
+
+@keyframes loading-spinnerÏ {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
