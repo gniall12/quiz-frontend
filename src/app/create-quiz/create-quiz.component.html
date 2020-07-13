@@ -1,14 +1,13 @@
 <h3 *ngIf="quizName">{{ quizName }}</h3>
 
 <div *ngFor="let round of rounds; index as j">
-  <h5>Round {{ j + 1 }}</h5>
+  <h5 class="inline-title">Round {{ j + 1 }}</h5>
+  <button (click)="onRemoveRound(j)" class="btn remove-btn">
+    <img src="assets/remove_x.svg" alt="Remove" />
+  </button>
   <div *ngFor="let control of round.controls; index as i">
-    <p class="question-title">Question {{ i + 1 }}</p>
-    <button
-      (click)="onRemoveQuestion(j, i)"
-      id="remove-question-btn"
-      class="btn"
-    >
+    <p class="question-title inline-title">Question {{ i + 1 }}</p>
+    <button (click)="onRemoveQuestion(j, i)" class="btn remove-btn">
       <img src="assets/remove_x.svg" alt="Remove" />
     </button>
     <input [formControl]="round.controls[i]" />
