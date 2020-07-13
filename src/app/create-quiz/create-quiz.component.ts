@@ -60,6 +60,12 @@ export class CreateQuizComponent implements OnInit {
     });
   }
 
+  onRemoveQuestion(roundIndex: number, questionIndex: number) {
+    const round = this.rounds[roundIndex];
+    round.controls.splice(questionIndex, 1);
+    round.value.splice(questionIndex, 1);
+  }
+
   removeEmptyQuestions(rounds: Array<FormArray>) {
     rounds.forEach(function (round: FormArray) {
       // Use for loop instead of forEach to allow removing multiple items

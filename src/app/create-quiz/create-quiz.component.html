@@ -4,10 +4,21 @@
   <h5>Round {{ j + 1 }}</h5>
   <div *ngFor="let control of round.controls; index as i">
     <p class="question-title">Question {{ i + 1 }}</p>
+    <button
+      (click)="onRemoveQuestion(j, i)"
+      id="remove-question-btn"
+      class="btn"
+    >
+      <img src="assets/remove_x.svg" alt="Remove" />
+    </button>
     <input [formControl]="round.controls[i]" />
   </div>
   <button class="btn btn-with-icon" (click)="onAddQuestion(round)">
-    <img src="assets/add_question.svg" alt="Add Question" class="btn-with-icon-icon" />
+    <img
+      src="assets/add_question.svg"
+      alt="Add Question"
+      class="btn-with-icon-icon"
+    />
     <p class="plain-text" class="btn-with-icon-text">Add Question</p>
   </button>
 </div>
@@ -24,4 +35,6 @@
 >
   Submit
 </button>
-<p *ngIf="emptyFormSubmitted" class="error-message">No Questions Added! Try again</p>
+<p *ngIf="emptyFormSubmitted" class="error-message">
+  No Questions Added! Try again
+</p>
