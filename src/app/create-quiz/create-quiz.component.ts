@@ -41,8 +41,8 @@ export class CreateQuizComponent implements OnInit {
   }
 
   onSubmit() {
-    this.removeEmptyQuestions(this.rounds);
-    this.removeEmptyRounds(this.rounds);
+    this.removeEmptyQuestions();
+    this.removeEmptyRounds();
     const numRounds = this.rounds.length;
     if (numRounds === 0) {
       this.emptyFormSubmitted = true;
@@ -60,8 +60,18 @@ export class CreateQuizComponent implements OnInit {
     });
   }
 
-  removeEmptyQuestions(rounds: Array<FormArray>) {
-    rounds.forEach(function (round: FormArray) {
+  onRemoveQuestion(roundIndex: number, questionIndex: number) {
+    const round = this.rounds[roundIndex];
+    round.controls.splice(questionIndex, 1);
+    round.value.splice(questionIndex, 1);
+  }
+
+  onRemoveRound(index: number) {
+    this.rounds.splice(index, 1);
+  }
+
+  removeEmptyQuestions() {
+    this.rounds.forEach(function (round: FormArray) {
       // Use for loop instead of forEach to allow removing multiple items
       for (let i = round.value.length - 1; i >= 0; i--) {
         if (round.value[i] === "") {
@@ -71,11 +81,11 @@ export class CreateQuizComponent implements OnInit {
     });
   }
 
-  removeEmptyRounds(rounds: Array<FormArray>) {
+  removeEmptyRounds() {
     // Use for loop instead of forEach to allow removing multiple items
-    for (let i = rounds.length - 1; i >= 0; i--) {
-      if (rounds[i].value.length < 1) {
-        rounds.splice(i, 1);
+    for (let i = this.rounds.length - 1; i >= 0; i--) {
+      if (this.rounds[i].value.length < 1) {
+        this.rounds.splice(i, 1);
       }
     }
   }

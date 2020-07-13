@@ -2,3 +2,12 @@ input {
   margin-bottom: 5px;
 }
 
+.inline-title {
+  display: inline;
+}
+
+.remove-btn {
+  padding: 0px 10px;
+  border: 0px;
+  vertical-align: text-bottom;
+}
