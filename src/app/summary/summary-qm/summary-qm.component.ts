@@ -42,6 +42,10 @@ export class SummaryQmComponent extends SummaryComponent implements OnInit {
   }
 
   onRemoveParticipant(participant: Participant) {
+    const participantIndex: number = this.participants.indexOf(participant);
+    if (participantIndex > -1) {
+      this.participants.splice(participantIndex, 1);
+    }
     this.backendService.deleteParticipant(participant).subscribe((res) => {
       console.log(res);
     });
