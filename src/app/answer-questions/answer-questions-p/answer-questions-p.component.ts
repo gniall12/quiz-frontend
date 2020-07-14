@@ -19,7 +19,7 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
   answersFormData: FormGroup;
   subscription: Subscription;
   submitted: boolean;
-  disableSubmit: boolean;
+  loading: boolean;
   answers: Array<Answer>;
 
   constructor(
@@ -47,6 +47,7 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
             this.router.navigate([nextRoute]);
           } else {
             this.submitAnswers().subscribe(() => {
+              this.loading = false;
               this.submitted = true;
               this.router.navigate([nextRoute]);
             });
@@ -81,16 +82,17 @@ export class AnswerQuestionsPComponent extends AnswerQuestionsComponent
       $("#confirmSubmitModal").modal("show");
     } else {
       this.submitAnswers().subscribe(() => {
+        this.loading = false;
         this.submitted = true;
       });
     }
   }
 
   submitAnswers(): Observable<AnswersResponse> {
+    this.loading = true;
     this.answers.forEach((answer: Answer) => {
       answer.answer = this.answersFormData.value[answer.question.question];
     });
-    this.disableSubmit = true;
     return this.backendService.submitAnswers(this.answers);
   }
 
