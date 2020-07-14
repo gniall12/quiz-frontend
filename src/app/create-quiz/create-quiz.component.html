@@ -28,11 +28,12 @@
 </button>
 
 <button
-  [disabled]="disableSubmit"
+  [disabled]="loading"
   class="btn custom-btn submit-btn"
   (click)="onSubmit()"
 >
-  Submit
+  <span *ngIf="loading" class="loading-spinner"></span>
+  <span *ngIf="!loading">Submit</span>
 </button>
 <p *ngIf="emptyFormSubmitted" class="error-message">
   No Questions Added! Try again

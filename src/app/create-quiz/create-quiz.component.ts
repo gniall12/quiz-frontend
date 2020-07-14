@@ -12,7 +12,7 @@ import { Quiz } from "../interfaces/quiz";
 export class CreateQuizComponent implements OnInit {
   quizName: string;
   rounds: Array<FormArray>;
-  disableSubmit: boolean;
+  loading: boolean;
   emptyFormSubmitted: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
@@ -20,7 +20,7 @@ export class CreateQuizComponent implements OnInit {
   ngOnInit() {
     this.getQuizName();
     this.rounds = [new FormArray([])];
-    this.disableSubmit = false;
+    this.loading = false;
     this.emptyFormSubmitted = false;
   }
 
@@ -41,14 +41,15 @@ export class CreateQuizComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.removeEmptyQuestions();
     this.removeEmptyRounds();
     const numRounds = this.rounds.length;
     if (numRounds === 0) {
       this.emptyFormSubmitted = true;
+      this.loading = false;
       return;
     }
-    this.disableSubmit = true;
     const questions = this.rounds.map((formdata: FormArray, index: number) => {
       return {
         round_number: index,
@@ -56,6 +57,7 @@ export class CreateQuizComponent implements OnInit {
       };
     });
     this.backendService.addRounds(questions, numRounds).subscribe((resp) => {
+      this.loading = false;
       this.router.navigate(["quizmaster/summary"]);
     });
   }
