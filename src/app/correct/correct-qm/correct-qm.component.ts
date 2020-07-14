@@ -17,7 +17,7 @@ export class CorrectQmComponent implements OnInit {
   quiz: Quiz;
   participants: Array<Participant>;
   participantAnswers: Array<Answer>;
-  disableSubmit: boolean;
+  loading: boolean;
   uncorrected: boolean;
 
   constructor(private backendService: BackendService, private router: Router) {}
@@ -32,7 +32,7 @@ export class CorrectQmComponent implements OnInit {
       this.quiz = resp;
     });
     this.participantAnswers = [];
-    this.disableSubmit = false;
+    this.loading = false;
     this.uncorrected = false;
   }
 
@@ -65,7 +65,7 @@ export class CorrectQmComponent implements OnInit {
     if (!this.checkAllAnswersCorrected()) {
       this.uncorrected = true;
     } else {
-      this.disableSubmit = true;
+      this.loading = true;
       this.participants.forEach(function (participant: Participant) {
         let numCorrect = 0;
         participant.answers.forEach(function (answer) {
@@ -77,6 +77,7 @@ export class CorrectQmComponent implements OnInit {
       this.backendService
         .setParticipantScores(this.participants)
         .subscribe((quiz: Quiz) => {
+          this.loading = false;
           this.router.navigate([`quizmaster/${quiz.current_page}`]);
         });
     }

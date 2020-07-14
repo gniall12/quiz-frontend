@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
   createFormdata: FormGroup;
   joinFormdata: FormGroup;
   quizId: number;
-  disableSubmit: boolean;
+  loading: boolean;
   joinErrorMessage: string;
 
   constructor(
@@ -41,7 +41,7 @@ export class HomeComponent implements OnInit {
         this.joinFormdata.controls["quizCode"].setValue(params["quiz-id"]);
       }
     });
-    this.disableSubmit = false;
+    this.loading = false;
   }
 
   public onCreateQuiz() {
@@ -55,16 +55,17 @@ export class HomeComponent implements OnInit {
   }
 
   public onCreateQuizSubmit() {
-    this.disableSubmit = true;
+    this.loading = true;
     const quizName: string = this.createFormdata.controls["quizName"].value;
     this.backendService.createQuiz(quizName).subscribe((quiz: Quiz) => {
+      this.loading = false;
       this.dataService.setQuizId(quiz.id.toString());
       this.router.navigate(["create-quiz"]);
     });
   }
 
   public onJoinQuizSubmit() {
-    this.disableSubmit = true;
+    this.loading = true;
     const participantName: string = this.joinFormdata.controls[
       "participantName"
     ].value;
@@ -72,11 +73,12 @@ export class HomeComponent implements OnInit {
     this.dataService.setQuizId(quizId);
     this.backendService.addParticipant(participantName).subscribe(
       (participant: Participant) => {
+        this.loading = false;
         this.dataService.setParticipantId(participant.id.toString());
         this.router.navigate(["participant/summary"]);
       },
       (error) => {
-        this.disableSubmit = false;
+        this.loading = false;
         this.joinErrorMessage = error["error"]["message"];
         if (error.status == 404)
           this.joinErrorMessage += ". Did you enter the right code?";

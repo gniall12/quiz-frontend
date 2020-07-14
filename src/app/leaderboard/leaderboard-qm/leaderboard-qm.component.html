@@ -15,10 +15,11 @@
 </table>
 
 <button
-  [disabled]="disableSubmit"
+  [disabled]="loading"
   *ngIf="!finalRound"
   class="btn custom-btn submit-btn"
   (click)="onProceed()"
 >
-  Proceed
+  <span *ngIf="loading" class="loading-spinner"></span>
+  <span *ngIf="!loading">Proceed</span>
 </button>

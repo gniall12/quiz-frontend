@@ -35,10 +35,11 @@
   </div>
 
   <button
-    [disabled]="disableSubmit"
+    [disabled]="loading"
     class="btn custom-btn submit-btn"
     (click)="onStartQuiz()"
   >
-    Start Quiz
+    <span *ngIf="loading" class="loading-spinner"></span>
+    <span *ngIf="!loading">Start Quiz</span>
   </button>
 </div>

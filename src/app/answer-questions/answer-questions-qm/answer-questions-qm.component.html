@@ -11,9 +11,10 @@
 <p>Waiting for participants to answer</p>
 
 <button
-  [disabled]="disableSubmit"
+  [disabled]="loading"
   class="btn custom-btn submit-btn"
   (click)="onEndRound()"
 >
-  End Round
+  <span *ngIf="loading" class="loading-spinner"></span>
+  <span *ngIf="!loading">End Round</span>
 </button>

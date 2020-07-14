@@ -11,7 +11,7 @@ import { Quiz } from "src/app/interfaces/quiz";
 })
 export class AnswerQuestionsQmComponent extends AnswerQuestionsComponent
   implements OnInit {
-  disableSubmit: boolean;
+  loading: boolean;
 
   constructor(
     protected backendService: BackendService,
@@ -22,12 +22,13 @@ export class AnswerQuestionsQmComponent extends AnswerQuestionsComponent
 
   ngOnInit() {
     super.loadQuestions().subscribe();
-    this.disableSubmit = false;
+    this.loading = false;
   }
 
   onEndRound() {
-    this.disableSubmit = true;
+    this.loading = true;
     this.backendService.updateQuiz("correct", null).subscribe((quiz: Quiz) => {
+      this.loading = false;
       this.router.navigate([`quizmaster/${quiz.current_page}`]);
     });
   }

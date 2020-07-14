@@ -27,11 +27,12 @@
     </label>
   </div>
   <button
-    [disabled]="disableSubmit || createFormdata.invalid"
+    [disabled]="loading || createFormdata.invalid"
     type="submit"
     class="btn custom-btn submit-btn"
   >
-    Submit
+    <span *ngIf="loading" class="loading-spinner"></span>
+    <span *ngIf="!loading">Submit</span>
   </button>
 </form>
 
@@ -74,11 +75,12 @@
     </label>
   </div>
   <button
-    [disabled]="disableSubmit || joinFormdata.invalid"
+    [disabled]="loading || joinFormdata.invalid"
     type="submit"
     class="btn custom-btn submit-btn"
   >
-    Submit
+    <span *ngIf="loading">Loading</span>
+    <span *ngIf="!loading">Submit</span>
   </button>
 </form>
 <p *ngIf="joinErrorMessage">{{ joinErrorMessage }}</p>

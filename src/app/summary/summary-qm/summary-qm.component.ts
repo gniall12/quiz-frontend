@@ -13,7 +13,7 @@ import { Quiz } from "src/app/interfaces/quiz";
 })
 export class SummaryQmComponent extends SummaryComponent implements OnInit {
   baseUrl: string;
-  disableSubmit: boolean;
+  loading: boolean;
 
   constructor(
     protected backendService: BackendService,
@@ -25,14 +25,15 @@ export class SummaryQmComponent extends SummaryComponent implements OnInit {
   ngOnInit() {
     super.ngOnInit();
     this.baseUrl = environment.frontendUrl;
-    this.disableSubmit = false;
+    this.loading = false;
   }
 
   onStartQuiz() {
-    this.disableSubmit = true;
+    this.loading = true;
     this.backendService
       .updateQuiz("answer-questions", 0)
       .subscribe((quiz: Quiz) => {
+        this.loading = false;
         this.router.navigate([`quizmaster/${quiz.current_page}`]);
       });
   }

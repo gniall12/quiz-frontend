@@ -17,11 +17,9 @@
       />
     </div>
   </div>
-  <button
-    [disabled]="disableSubmit || submitted"
-    class="btn custom-btn submit-btn"
-  >
-    Submit
+  <button [disabled]="loading || submitted" class="btn custom-btn submit-btn">
+    <span *ngIf="loading" class="loading-spinner"></span>
+    <span *ngIf="!loading">Submit</span>
   </button>
 </form>
 
